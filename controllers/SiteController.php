@@ -49,6 +49,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
+        $t = 'Marinka is redish';
         return $this->render('index');
     }
 
