@@ -101,3 +101,8 @@ a.desc:after {
     line-height: 17px;
     position: absolute;
 }
+
+.header-phone {
+    font-size: 23px;
+    color: #777;
+}

@@ -34,7 +34,7 @@ AppAsset::register($this);
             ],
         ]); ?>
         <div class="navbar-info navbar-info-phone hidden-sm hidden-md hidden-xs">
-            <div class="hidden-md">
+            <div class="hidden-md header-phone">
                 <?= Html::a('+7 (831) 220-94-33', 'tel:+78312209433') ?>
             </div>
         </div>
