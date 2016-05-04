@@ -3,9 +3,16 @@
 $params = require(__DIR__ . '/params.php');
 
 $config = [
+    'language' => 'ru',
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'modules' => [
+        'admin' => [
+            'class' => 'app\modules\admin\Module',
+            'defaultRoute' => 'index',
+        ],
+    ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -27,6 +34,21 @@ $config = [
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
             'useFileTransport' => true,
+        ],
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+                '/' => 'page/index',
+                'about' => 'page/about',
+                'promo' => 'page/promo',
+                'price' => 'page/price',
+                'contact' => 'page/contact',
+                'transportation' => 'page/transportation',
+
+                // Module
+                '<module:[a-zA-Z0-9-_]+>/<controller:[a-zA-Z-_]+>/<action:[a-zA-Z-_]+>/<id:\d+>' => '<module>/<controller>/<action>',
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

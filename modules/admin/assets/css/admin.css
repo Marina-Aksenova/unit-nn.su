@@ -1,0 +1,223 @@
+html,
+body {
+    height: 100%;
+    background-image: url('/images/bg.jpg');
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.height-268 {
+    height: 268px;
+}
+
+.padding-left-20 {
+    padding-left: 20px;
+}
+
+.wrap {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -70px;
+    padding: 0 0 70px;
+}
+
+.wrap-page {
+    padding-top: 51px;
+}
+
+.footer {
+    height: 70px;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+    background: #595959 url('/images/bg-footer.jpg');
+    font-family: 'Tahoma', sans-serif;
+    font-size: 14px;
+    border-top: 5px solid #000;
+    color: #fff;
+    overflow: hidden;
+}
+
+.footer a {
+    color: #fff;
+}
+
+.footer-icon {
+    width: 21px;
+    padding-top: 2px;
+}
+
+.footer-content {
+    line-height: 19px;
+}
+
+.footer-contact {
+    padding: 2px 0;
+}
+
+.footer-network {
+    padding-top: 10px;
+}
+
+.footer a:hover {
+    color: #fff;
+}
+
+a {
+    color: #007BA6;
+}
+
+a:hover {
+    color: #016284;
+}
+
+.text-gray {
+    color: #bbb;
+}
+
+.text-brown {
+    color: #BB7B7B;
+}
+
+.block-center {
+    padding: 10px 0;
+    text-align: center;
+}
+
+.logo-label {
+    font-family: 'PT Sans', sans-serif;
+    font-size: 14px;
+    font-style: italic;
+    color: #fff;
+}
+
+.navbar-inverse .navbar-brand-logo {
+    padding: 7px 5px 0 5px;
+    color: #fff;
+}
+
+.admin-grid-button:hover {
+    text-decoration: none;
+}
+
+.admin-grid-date {
+    font-size: 12px;
+}
+
+.page-text h3, .page-text hr {
+    margin: 5px 0;
+}
+
+.page-active td {
+    text-align: left;
+}
+
+.album-photo {
+    margin:2px;
+}
+
+.album-photo-inputs {
+    margin-left: 10px;
+}
+
+.album-photo-inputs label {
+    margin: 5px 0 0 0;
+}
+
+.border {
+    border: 1px solid #ddd;
+    background: #fff;
+    padding: 4px;
+}
+
+#sortable .album-photo {
+    cursor: pointer;
+}
+
+.albums div {
+    overflow: hidden;
+}
+
+.albums .border {
+    margin: 5px;
+}
+
+.album-title {
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.admin-menus table input {
+    width: 40px;
+    padding: 2px 10px;
+    height: 20px;
+    margin: 0 10px 0 0;
+}
+
+fieldset {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 7px;
+}
+
+legend {
+    border-bottom: 0;
+    width: auto;
+    padding: 0 10px;
+    color: #aaa;
+    margin: 0;
+}
+
+
+
+
+
+/* =============== PAGE =================== */
+.page-title-box {
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.page-title-box .container {
+    padding: 8px 10px 10px 10px;
+}
+
+.page-title-box .breadcrumb {
+    margin: 0;
+    background-color: transparent;
+}
+
+.page-title-title {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.page-text {
+    font-family: sans-serif;
+    font-size: 14px;
+    background-color: #fff;
+    margin-bottom: 15px;
+    padding: 30px 20px 20px 20px;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+.page-images {
+    margin: 20px 0;
+}
+
+.page-images img {
+    cursor: pointer;
+}
+
+.page-images input {
+}
+
+.page-upload {
+    margin: 20px 0;
+}
+/* =============== //PAGE =================== */
