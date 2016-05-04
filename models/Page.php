@@ -31,7 +31,7 @@ class Page extends \yii\db\ActiveRecord
         return [
             [['name'], 'required'],
             [['name'], 'string', 'max' => 50],
-            [['text'], 'string', 'max' => 255],
+            [['text'], 'string'],
         ];
     }
 

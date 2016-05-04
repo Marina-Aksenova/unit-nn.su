@@ -3,51 +3,56 @@
 namespace app\controllers;
 
 use app\models\Page;
+use yii\web\NotFoundHttpException;
 
 class PageController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        $page = Page::find()->where(['id' => 1])->one();
-
-        return $this->render('index', ['page' => $page]);
+        return $this->render('index', ['page' => $this->getPage(1)]);
     }
 
     public function actionAbout()
     {
-        $page = Page::findOne(2);
-
-        return $this->render('about', ['page' => $page]);
+        return $this->render('about', ['page' => $this->getPage(2)]);
     }
 
     public function actionPromo()
     {
-        $page = Page::find()->where(['id' => 3])->one();
-
-        return $this->render('promo', ['page' => $page]);
+        return $this->render('promo', ['page' => $this->getPage(3)]);
     }
     
     public function actionPrice()
     {
-        $page = Page::find()->where(['id' => 4])->one();
-
-        return $this->render('price', ['page' => $page]);
+        return $this->render('price', ['page' => $this->getPage(4)]);
     }
 
     public function actionContact()
     {
-        $page = Page::find()->where(['id' => 5])->one();
-
-        return $this->render('contact', ['page' => $page]);
+        return $this->render('contact', ['page' => $this->getPage(5)]);
     }
 
-    public function actionTransportation()
+    public function actionDelivery()
     {
-        $page = Page::find()->where(['id' => 6])->one();
-
-        return $this->render('transportation', ['page' => $page]);
+        return $this->render('delivery', ['page' => $this->getPage(6)]);
     }
 
+    public function actionConsultation()
+    {
+        return $this->render('consultation', ['page' => $this->getPage(7)]);
+    }
 
+    public function actionSale()
+    {
+        return $this->render('sale', ['page' => $this->getPage(8)]);
+    }
 
+    private function getPage($id)
+    {
+        if (!$page = Page::findOne($id)) {
+            throw new NotFoundHttpException('Страница не найдена');
+        }
+
+        return $page;
+    }
 }

@@ -10,10 +10,6 @@ body {
     padding: 0 0 60px;
 }
 
-.wrap > .container {
-    padding: 70px 15px 20px;
-}
-
 .footer {
     height: 60px;
     background-color: #f5f5f5;
@@ -90,19 +86,110 @@ a.desc:after {
     margin: 0 0 15px 0;
 }
 
-.breadcrumbs-block {
-    margin-top: 50px;
-}
-
 .navbar-info-phone {
-    margin: 1% 0 0 10%;
+    margin: 14px 0 0 10%;
     text-align: center;
     float: left;
     line-height: 17px;
     position: absolute;
+    font-size: 23px;
+    font-weight: bold;
 }
 
-.header-phone {
-    font-size: 23px;
-    color: #777;
+a, a:focus, a:hover {
+    color: #009688;
+}
+
+.navbar {
+    background-color: #fff;
+}
+
+.wrap .navbar li a:hover {
+    background-color: #ddd;
+}
+
+.wrap .navbar .active a {
+    background-color: #04859d;
+    color: #fff;
+}
+
+.navbar-brand {
+    padding: 3px;
+}
+
+.breadcrumbs-block-bg {
+    background: transparent url(/images/block-bg.jpg) repeat 0 0;
+}
+
+.breadcrumbs-block {
+    font-size: 22px;
+    height: 67px;
+    color: #fff;
+    padding: 20px 0 0 0;
+    margin-top: 50px;
+}
+
+.breadcrumb {
+    padding: 0;
+    margin-bottom: 20px;
+    list-style: none;
+    background: none;
+    color: #fff;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+.breadcrumb a {
+    color: #ccc;
+}
+
+.breadcrumb .active {
+    color: #fff;
+}
+
+.carousel-control.left {
+    background-image: none;
+}
+
+.carousel-control.right {
+    background-image: none;
+}
+
+.carousel-control {
+    width: 7%;
+}
+
+.menu-item-actions {
+    background: transparent url(/images/menu/1.jpg) no-repeat 0 0;
+}
+
+.menu-item-delivery {
+    background: transparent url(/images/menu/2.jpg) no-repeat 0 0;
+}
+
+.menu-item-consultations {
+    background: transparent url(/images/menu/3.jpg) no-repeat 0 0;
+}
+
+.menu-item-sales {
+    background: transparent url(/images/menu/4.jpg) no-repeat 0 0;
+}
+
+.menu-item a {
+    width: 250px;
+    height: 80px;
+    display: block;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.margin-top-60 {
+    margin-top: 60px;
+}
+
+.font-14 {
+    font-size: 14PT;
 }

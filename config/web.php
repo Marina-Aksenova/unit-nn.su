@@ -44,7 +44,9 @@ $config = [
                 'promo' => 'page/promo',
                 'price' => 'page/price',
                 'contact' => 'page/contact',
-                'transportation' => 'page/transportation',
+                'delivery' => 'page/delivery',
+                'consultation' => 'page/consultation',
+                'sale' => 'page/sale',
 
                 // Module
                 '<module:[a-zA-Z0-9-_]+>/<controller:[a-zA-Z-_]+>/<action:[a-zA-Z-_]+>/<id:\d+>' => '<module>/<controller>/<action>',

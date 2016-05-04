@@ -4,7 +4,7 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 
-$this->title = 'Цены';
+$this->title = 'Распродажа';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
