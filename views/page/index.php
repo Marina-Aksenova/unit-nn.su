@@ -5,8 +5,10 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $pages array */
 
-$this->title = 'Главная';
+$this->title = 'Главная - Юнит-НН';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= $page->text ?>
+<div class="container main-page-container">
+    <?= $page->text ?>
+</div>
