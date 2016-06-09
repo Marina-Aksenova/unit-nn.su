@@ -10,6 +10,19 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
 AppAsset::register($this);
+
+$this->registerJs("
+    $('.menu-item').each(function(index, item) {
+        $(item).on('mouseenter', function() {
+            var item = $(this);
+            item.css('background-position', '10px 0');
+        });    
+        $(item).on('mouseleave', function() {
+            var item = $(this);
+            item.css('background-position', '0 0');
+        });    
+    });
+");
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -17,12 +30,12 @@ AppAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords"
-          content="оргтехника, тонер, картридж, вал, ракель, принтер, заправка картриджей, ремонт принтера, снпч, струйный принтер, лазерный принтер">
+    <meta name="keywords" content="оргтехника, тонер, картридж, вал, ракель, принтер, заправка картриджей, ремонт принтера, снпч, струйный принтер, лазерный принтер">
     <meta name="description" content="Продажа расходных материалов для ремонта оргтехники и заправки картриджей">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="/favicon.ico"/>
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title><?= Html::encode($this->title . ' - Юнит-НН') ?></title>
     <?php $this->head() ?>
 </head>
 <body>
@@ -31,7 +44,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => '<img src="/images/logo.png">',
+        'brandLabel' => '<img src="/images/logo.png" style="height:40px;">',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-fixed-top navbar-default',
@@ -47,11 +60,10 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'Главная', 'url' => ['/page/index']],
             ['label' => 'О компании', 'url' => ['/page/about']],
-            ['label' => 'Акции', 'url' => ['/page/promo']],
-            ['label' => 'Цены', 'url' => ['/page/price']],
+            ['label' => 'Магазин', 'url' => ['/page/price']],
             ['label' => 'Доставка', 'url' => ['/page/delivery']],
             ['label' => 'Распродажа', 'url' => ['/page/sale']],
-            ['label' => 'Контакты', 'url' => ['/page/contact']],
+            ['label' => 'Контакты', 'url' => ['/page/contacts']],
         ],
     ]); ?>
     <?php NavBar::end(); ?>
@@ -70,35 +82,20 @@ AppAsset::register($this);
 
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
-                    <div
-                        class="item active"
-                        style="background: transparent url(/images/slider/1.png) no-repeat 50% 0"
-                        title="Продажа расходных материалов"
-                    >
+                    <div class="item active">
+                        <img src="/images/slider/1.png" title="Продажа расходных материалов" class="img-responsive">
                     </div>
-                    <div
-                        class="item"
-                        style="background: transparent url(/images/slider/2.png) no-repeat 50% 0"
-                        title="Фотовалы, ракеля и чипы"
-                    >
+                    <div class="item">
+                        <img src="/images/slider/2.png" title="Фотовалы, ракеля и чипы" class="img-responsive">
                     </div>
-                    <div
-                        class="item"
-                        style="background: transparent url(/images/slider/3.png) no-repeat 50% 0"
-                        title="Тонеры и чернила"
-                    >
+                    <div class="item">
+                        <img src="/images/slider/3.png" title="Тонеры и чернила" class="img-responsive">
                     </div>
-                    <div
-                        class="item"
-                        style="background: transparent url(/images/slider/4.png) no-repeat 50% 0"
-                        title="СНПЧ и ПЗК"
-                    >
+                    <div class="item">
+                        <img src="/images/slider/4.png" title="СНПЧ и ПЗК" class="img-responsive">
                     </div>
-                    <div
-                        class="item"
-                        style="background: transparent url(/images/slider/5.png) no-repeat 50% 0"
-                        title="Совместимые струйные и лазерные картриджи"
-                    >
+                    <div class="item">
+                        <img src="/images/slider/5.png" title="Совместимые струйные и лазерные картриджи" class="img-responsive">
                     </div>
                 </div>
 
@@ -113,14 +110,40 @@ AppAsset::register($this);
                 </a>
             </div>
         </div>
+
+        <?= $content ?>
+    <?php } else { ?>
+
+    <div class="container-fluid main-page-title-container">
+        <div class="main-page-title">
+            <h1><?= Html::encode($this->title) ?></h1>
+        </div>
+    </div>
+
+    <div class="container margin-top-20">
+        <div class="col-lg-3 col-md-4 hidden-sm hidden-xs">
+            <div class="menu-item menu-item-delivery">
+                <a href="/delivery"></a>
+            </div>
+            <div class="menu-item menu-item-consultations">
+                <a href="/contact"></a>
+            </div>
+            <div class="menu-item menu-item-sales">
+                <a href="/sale"></a>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-8 font-14">
+            <?= $content ?>
+        </div>
+    </div>
+
     <?php } ?>
-    <?= $content ?>
 
 </div>
 
 <footer class="footer">
     <div class="container">
-        <a href="/site/contact" class="pull-left">Написать нам</a>
+        <a href="/contact" class="pull-left">Написать нам</a>
 
         <p class="pull-right">&copy; 2016 Юнит-НН</p>
     </div>

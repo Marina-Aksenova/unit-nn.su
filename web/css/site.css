@@ -2,6 +2,12 @@ html,
 body {
     height: 100%;
     background: #f7f7f7 url(/images/bg.jpg) repeat 0 0;
+    font-family: Open Sans, sans-serif;
+}
+
+h1 {
+    padding: 0;
+    margin: 0;
 }
 
 .wrap {
@@ -110,37 +116,6 @@ a, a:focus, a:hover {
     padding: 3px;
 }
 
-.breadcrumbs-block-bg {
-    background: transparent url(/images/block-bg.jpg) repeat 0 0;
-}
-
-.breadcrumbs-block {
-    font-size: 22px;
-    height: 67px;
-    color: #fff;
-    padding: 20px 0 0 0;
-    margin-top: 50px;
-}
-
-.breadcrumb {
-    padding: 0;
-    margin-bottom: 20px;
-    list-style: none;
-    background: none;
-    color: #fff;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
-}
-
-.breadcrumb a {
-    color: #ccc;
-}
-
-.breadcrumb .active {
-    color: #fff;
-}
-
 .menu-item-actions {
     background: transparent url(/images/menu/1.jpg) no-repeat 0 0;
 }
@@ -175,15 +150,15 @@ a, a:focus, a:hover {
     font-size: 14PT;
 }
 
-.carousel .item {
-    height: 326px;
-}
-
 .carousel-container {
-    padding: 0;
+    padding: 60px 0 0 0;
     margin-top: -10px;
     border-bottom: 1px solid #ddd;
     background-color: #fff;
+}
+
+.carousel-container img {
+    margin: 0 auto;
 }
 
 .carousel-indicators li {
@@ -206,23 +181,69 @@ a, a:focus, a:hover {
 }
 
 .main-page-container {
-    padding: 22px;
+    padding: 0 22px 22px 22px;
     border-right: 1px solid #ddd;
     border-left: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
     color: #000;
     background-color: #fff;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.main-page-container .panel {
+    height: 155px;
 }
 
 .page-container {
-    padding: 60px 22px 22px 22px;
+    padding: 22px;
     border: 1px solid #ddd;
     color: #000;
     background-color: #fff;
     margin-bottom: 15px;
 }
 
-.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+.main-page-price {
+    font-size: 51px;
+    font-weight: bold;
+}
+
+.main-page-title-container {
+    padding: 60px 0 0 0;
+}
+
+.main-page-title {
+    text-align: center;
+    background: transparent url(/images/block-bg.jpg) repeat 0 0;
+    font-size: 26px;
+    height: 67px;
     color: #fff;
-    background-color: #04859d;
+    padding: 13px 0 0 0;
+    font-weight: bold;
+}
+
+.main-page-product-title {
+    height: 50px;
+    line-height: 22px;
+}
+
+.main-page-block-title {
+    font-size: 34px;
+    margin: 25px auto 10px auto;
+    max-width: 600px;
+}
+
+.map iframe {
+    width: 100%;
+}
+
+.main-page-discount {
+    font-size: 20px;
+    padding: 0 0 10px 0;
+    font-weight: bold;
+}
+
+.ruble {
+    height: 25px;
+    margin-top: -25px;
 }

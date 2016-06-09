@@ -17,6 +17,7 @@
         "php": ">=5.4.0",
         "yiisoft/yii2": ">=2.0.5",
         "yiisoft/yii2-bootstrap": "*",
+        "PHPOffice/PHPExcel": "*",
         "yiisoft/yii2-swiftmailer": "*"
     },
     "require-dev": {

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\services\Excel;
 use app\models\Page;
 use yii\web\NotFoundHttpException;
 
@@ -9,6 +10,8 @@ class PageController extends \yii\web\Controller
 {
     public function actionIndex()
     {
+        $excel = Excel::import();
+
         return $this->render('index', ['page' => $this->getPage(1)]);
     }
 
@@ -27,7 +30,7 @@ class PageController extends \yii\web\Controller
         return $this->render('page', ['page' => $this->getPage(4)]);
     }
 
-    public function actionContact()
+    public function actionContacts()
     {
         return $this->render('page', ['page' => $this->getPage(5)]);
     }
