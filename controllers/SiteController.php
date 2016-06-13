@@ -2,13 +2,17 @@
 
 namespace app\controllers;
 
-use app\components\services\Excel;
-use Yii;
-use yii\filters\AccessControl;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
-use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\LoginForm;
+use app\models\Order;
+use app\models\OrderItem;
+use app\models\Product;
+use app\models\User;
+use yii;
+use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\rbac\Role;
+use yii\web\Controller;
 
 class SiteController extends Controller
 {
@@ -47,14 +51,55 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+    public function actionOrder()
+    {
+        $order = new Order([
+//            'user_id' => Yii::$app->getUser()->getId(),
+        ]);
+        $order->saveOrError();
+
+        $orderItem = new OrderItem([
+            'product_id' => Product::find()->one()->id,
+            'order_id' => $order->id,
+            'amount' => 17,
+        ]);
+        $orderItem->saveOrError();
+
+        $orderItem = new OrderItem([
+            'product_id' => Product::findOne(2)->id,
+            'order_id' => $order->id,
+            'amount' => 16,
+        ]);
+        $orderItem->saveOrError();
+
+        Yii::$app->getSession()->set('order', $order);
+
+        /** @var Order $order */
+        if (!$order = Yii::$app->getSession()->get('order')) {
+            throw new yii\base\UserException('Корзина пуста');
+        }
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => $order->getItems()->with(['order']),
+        ]);
+        
+        return $this->render('order', ['order' => $order, 'dataProvider' => $dataProvider]);
+    }
+
     public function actionLogin()
     {
-        if (!\Yii::$app->user->isGuest) {
+        $user = Yii::$app->user;
+        if (!$user->isGuest) {
             return $this->goHome();
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            /** @var Role $userRole */
+            $userRoles = Yii::$app->getAuthManager()->getRolesByUser($user->id);
+            if (isset($userRoles[User::ROLE_ADMIN])) {
+                return $this->redirect('/admin');
+            }
             return $this->goBack();
         }
         return $this->render('login', [

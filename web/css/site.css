@@ -247,3 +247,14 @@ a, a:focus, a:hover {
     height: 25px;
     margin-top: -25px;
 }
+
+.component-amount input {
+    width: 50px;
+    margin: 0 10px;
+    display: inline;
+    text-align: center;
+}
+
+.shop-container table.table td {
+    vertical-align: middle;
+}

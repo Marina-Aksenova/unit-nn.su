@@ -70,7 +70,7 @@ class LoginForm extends Model
     public function getUser()
     {
         if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->username);
+            $this->_user = User::findByEmailOrPhone($this->username);
         }
 
         return $this->_user;
@@ -83,7 +83,7 @@ class LoginForm extends Model
     {
         return [
             'id' => 'ID',
-            'username' => 'Логин',
+            'username' => 'Эдектропочта или телефон',
             'password' => 'Пароль',
             'rememberMe' => 'Запомнить меня',
         ];

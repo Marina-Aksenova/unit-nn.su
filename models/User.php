@@ -1,103 +1,163 @@
 <?php
-
 namespace app\models;
 
-class User extends \yii\base\Object implements \yii\web\IdentityInterface
+use app\components\BaseActiveRecord;
+use app\components\services\BaseService;
+use libphonenumber\PhoneNumberUtil;
+use yii;
+use yii\base\UserException;
+use yii\db\ActiveQuery;
+use yii\web\IdentityInterface;
+
+/**
+ * User model
+ *
+ * @property integer $id
+ * @property string $first_name
+ * @property string $second_name
+ * @property string $third_name
+ * @property string $phone
+ * @property string $email
+ * @property integer $image_id
+ * @property string $auth_key
+ * @property string $password_hash
+ * @property string $password_reset_token
+ * @property string $password write-only password
+ */
+class User extends BaseActiveRecord implements IdentityInterface
 {
-    public $id;
-    public $username;
+    const ROLE_ADMIN = 'admin';
+    
     public $password;
-    public $authKey;
-    public $accessToken;
 
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
-
-    /**
-     * @inheritdoc
-     */
-    public static function findIdentity($id)
+    public static function tableName()
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return '{{%user}}';
     }
 
-    /**
-     * @inheritdoc
-     */
-    public static function findIdentityByAccessToken($token, $type = null)
+    public function beforeSave($insert)
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
+        $this->setPassword();
+
+        return parent::beforeSave($insert);
+    }
+
+    public function rules()
+    {
+        return [
+            ['first_name', 'required'],
+            ['first_name', 'string', 'max' => 50,],
+            ['first_name', 'trim'],
+
+            ['second_name', 'string', 'max' => 50,],
+            ['second_name', 'trim'],
+            ['second_name', 'default', 'value' => null],
+
+            ['third_name', 'string', 'max' => 50,],
+            ['third_name', 'trim'],
+            ['third_name', 'default', 'value' => null],
+
+            ['address', 'string', 'max' => 255,],
+            ['address', 'trim'],
+            ['address', 'default', 'value' => null],
+
+            ['phone', 'app\components\validators\Phone'],
+            ['phone', 'trim'],
+
+            ['email', 'string', 'max' => 255,],
+            ['email', 'email'],
+            ['email', 'trim'],
+            ['email', 'checkMail'],
+
+            ['password', 'string', 'min' => 5, 'max' => 25,],
+        ];
+    }
+
+    public function checkMail()
+    {
+        if (!$this->phone && !$this->email) {
+            $this->addError('phone', 'Необходимо указать электропочту или телефон');
         }
-
-        return null;
     }
 
-    /**
-     * Finds user by username
-     *
-     * @param  string      $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
+    public function attributeLabels()
     {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
-
-        return null;
+        return [
+            'id' => 'ID',
+            'first_name' => 'Имя',
+            'second_name' => 'Фамилия',
+            'third_name' => 'Отчество',
+            'phone' => 'Телефон',
+            'address' => 'Адрес',
+            'email' => 'Электропочта',
+            'password' => 'Пароль',
+        ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getAuthKey()
-    {
-        return $this->authKey;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function validateAuthKey($authKey)
-    {
-        return $this->authKey === $authKey;
-    }
-
-    /**
-     * Validates password
-     *
-     * @param  string  $password password to validate
-     * @return boolean if password provided is valid for current user
-     */
     public function validatePassword($password)
     {
-        return $this->password === $password;
+        return Yii::$app->security->validatePassword($password, $this->password_hash);
+    }
+
+    public function setPassword()
+    {
+        if (!$this->password_hash && !$this->password) {
+            $this->addError('Необходимо ввести пароль');
+        }
+
+        if ($this->password) {
+            $this->password_hash = Yii::$app->security->generatePasswordHash($this->password);
+        }
+    }
+    
+    public static function findIdentity($id)
+    {
+        return static::findOne(['id' => $id]);
+    }
+
+    public function getId()
+    {
+        return $this->getPrimaryKey();
+    }
+
+    public function getAuthKey()
+    {
+        return $this->auth_key;
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        throw new UserException('Системная ошибка');
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        throw new UserException('Системная ошибка');
+    }
+
+    /**
+     * @param $login
+     * @return null|self
+     */
+    public static function findByEmailOrPhone($login)
+    {
+        return (new ActiveQuery(get_called_class()))
+            ->where(['phone' => $login])
+            ->orWhere(['email' => $login])
+            ->one();
+    }
+
+    public function getFio()
+    {
+        $fio = $this->first_name;
+
+        if (!empty($this->seco)) {
+            $fio = $this->second_name . ' ' . $fio;
+        }
+
+        if (!empty($this->third_name)) {
+            $fio = $fio . ' ' . $this->third_name;
+        }
+        return $fio;
     }
 }

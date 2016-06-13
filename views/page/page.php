@@ -1,10 +1,12 @@
 <?php
+use app\models\Page;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
+/* @var $page Page */
 
-$this->title = $page->name;
+$this->title = $page->title;
 ?>
 
 <div class="page-container">

@@ -3,14 +3,16 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use yii\helpers\Html;
+use app\assets\AppAsset;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
-use app\assets\AppAsset;
+use yii\helpers\Html;
+use yii\web\View;
 
 AppAsset::register($this);
 
+$this->registerJsFile('/js/static/requirejs/require.min.js', ['position' => View::POS_HEAD]);
+$this->registerJsFile('/js/requirejs.config.js');
 $this->registerJs("
     $('.menu-item').each(function(index, item) {
         $(item).on('mouseenter', function() {
@@ -23,6 +25,8 @@ $this->registerJs("
         });    
     });
 ");
+
+$controller = Yii::$app->controller;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -30,7 +34,8 @@ $this->registerJs("
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="оргтехника, тонер, картридж, вал, ракель, принтер, заправка картриджей, ремонт принтера, снпч, струйный принтер, лазерный принтер">
+    <meta name="keywords"
+          content="оргтехника, тонер, картридж, вал, ракель, принтер, заправка картриджей, ремонт принтера, снпч, струйный принтер, лазерный принтер">
     <meta name="description" content="Продажа расходных материалов для ремонта оргтехники и заправки картриджей">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="/favicon.ico"/>
@@ -60,15 +65,30 @@ $this->registerJs("
         'items' => [
             ['label' => 'Главная', 'url' => ['/page/index']],
             ['label' => 'О компании', 'url' => ['/page/about']],
-            ['label' => 'Магазин', 'url' => ['/page/price']],
+            ['label' => 'Магазин', 'url' => ['/shop']],
             ['label' => 'Доставка', 'url' => ['/page/delivery']],
-            ['label' => 'Распродажа', 'url' => ['/page/sale']],
+//            ['label' => 'Распродажа', 'url' => ['/page/sale']],
             ['label' => 'Контакты', 'url' => ['/page/contacts']],
+            [
+                'label' => '<button type="submit" class="btn btn-default">Вход</button>',
+                'url' => ['/login'],
+                'linkOptions' => ['style' => 'padding: 7px 0 0 0'],
+                'visible' => Yii::$app->getUser()->getIsGuest(),
+                'encode' => false,
+            ],
+            [
+                'label' => '<span class="glyphicon glyphicon-user"></span>',
+                'url' => ['/cabinet'], 'encode' => false,
+                'visible' => !Yii::$app->getUser()->getIsGuest(),
+                'items' => [
+                    ['label' => 'Личный кабинет', 'url' => ['/cabinet']],
+                    ['label' => 'Выход', 'url' => ['/site/logout']],
+                ]],
         ],
     ]); ?>
     <?php NavBar::end(); ?>
 
-    <?php if (Yii::$app->controller->action->id === 'index') { ?>
+    <?php if ($controller->id === 'page' && $controller->action->id === 'index') { ?>
         <div class="container-fluid carousel-container">
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->
@@ -95,7 +115,8 @@ $this->registerJs("
                         <img src="/images/slider/4.png" title="СНПЧ и ПЗК" class="img-responsive">
                     </div>
                     <div class="item">
-                        <img src="/images/slider/5.png" title="Совместимые струйные и лазерные картриджи" class="img-responsive">
+                        <img src="/images/slider/5.png" title="Совместимые струйные и лазерные картриджи"
+                             class="img-responsive">
                     </div>
                 </div>
 
@@ -114,28 +135,32 @@ $this->registerJs("
         <?= $content ?>
     <?php } else { ?>
 
-    <div class="container-fluid main-page-title-container">
-        <div class="main-page-title">
-            <h1><?= Html::encode($this->title) ?></h1>
+        <div class="container-fluid main-page-title-container">
+            <div class="main-page-title">
+                <h1><?= Html::encode($this->title) ?></h1>
+            </div>
         </div>
-    </div>
 
-    <div class="container margin-top-20">
-        <div class="col-lg-3 col-md-4 hidden-sm hidden-xs">
-            <div class="menu-item menu-item-delivery">
-                <a href="/delivery"></a>
-            </div>
-            <div class="menu-item menu-item-consultations">
-                <a href="/contact"></a>
-            </div>
-            <div class="menu-item menu-item-sales">
-                <a href="/sale"></a>
-            </div>
+        <div class="container margin-top-20">
+            <?php if ($controller->id !== 'page' || in_array($controller->action->id, ['shop', 'login'])) {
+                echo $content;
+            } else { ?>
+                <div class="col-lg-3 col-md-4 hidden-sm hidden-xs">
+                    <div class="menu-item menu-item-delivery">
+                        <a href="/delivery"></a>
+                    </div>
+                    <div class="menu-item menu-item-consultations">
+                        <a href="/contact"></a>
+                    </div>
+                    <div class="menu-item menu-item-sales">
+                        <a href="/sale"></a>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8 font-14">
+                    <?= $content ?>
+                </div>
+            <?php } ?>
         </div>
-        <div class="col-lg-9 col-md-8 font-14">
-            <?= $content ?>
-        </div>
-    </div>
 
     <?php } ?>
 

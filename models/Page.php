@@ -2,7 +2,8 @@
 
 namespace app\models;
 
-use Yii;
+use app\components\BaseActiveRecord;
+use yii;
 
 /**
  * This is the model class for table "page".
@@ -13,7 +14,7 @@ use Yii;
  * @property string $date_create
  * @property string $date_change
  */
-class Page extends \yii\db\ActiveRecord
+class Page extends BaseActiveRecord
 {
     /**
      * @inheritdoc

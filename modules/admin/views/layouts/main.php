@@ -1,6 +1,7 @@
 <?php
 use app\assets\AppAsset;
 use app\modules\admin\components\AdminAsset;
+use app\modules\admin\components\CabinetAsset;
 use yii\bootstrap\Nav;
 use yii\helpers\Html;
 use yii\bootstrap\NavBar;
@@ -58,11 +59,9 @@ AdminAsset::register($this);
                 <a href="/admin/index/update/1" class="btn btn-default">Главная</a>
                 <a href="/admin/index/update/2" class="btn btn-default">О компании</a>
                 <a href="/admin/index/update/3" class="btn btn-default">Акции</a>
-                <a href="/admin/index/update/4" class="btn btn-default">Цены</a>
                 <a href="/admin/index/update/5" class="btn btn-default">Контакты</a>
                 <a href="/admin/index/update/6" class="btn btn-default">Доставка</a>
-                <a href="/admin/index/update/7" class="btn btn-default">Консультации</a>
-                <a href="/admin/index/update/8" class="btn btn-default">Распродажа</a>
+<!--                <a href="/admin/index/update/8" class="btn btn-default">Распродажа</a>-->
             </div>
         </div>
 

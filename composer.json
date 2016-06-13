@@ -18,7 +18,8 @@
         "yiisoft/yii2": ">=2.0.5",
         "yiisoft/yii2-bootstrap": "*",
         "PHPOffice/PHPExcel": "*",
-        "yiisoft/yii2-swiftmailer": "*"
+        "yiisoft/yii2-swiftmailer": "*",
+        "giggsey/libphonenumber-for-php": "~7.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

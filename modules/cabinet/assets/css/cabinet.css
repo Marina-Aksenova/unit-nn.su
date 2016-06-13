@@ -1,0 +1,63 @@
+html,
+body {
+    height: 100%;
+    background-image: url('/images/bg.jpg');
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.height-268 {
+    height: 268px;
+}
+
+.padding-left-20 {
+    padding-left: 20px;
+}
+
+.wrap {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -70px;
+    padding: 0 0 70px;
+}
+
+a {
+    color: #007BA6;
+}
+
+a:hover {
+    color: #016284;
+}
+
+.text-gray {
+    color: #bbb;
+}
+
+.text-brown {
+    color: #BB7B7B;
+}
+
+.block-center {
+    padding: 10px 0;
+    text-align: center;
+}
+
+.logo-label {
+    font-family: 'PT Sans', sans-serif;
+    font-size: 14px;
+    font-style: italic;
+    color: #fff;
+}
+
+.navbar-inverse .navbar-brand-logo {
+    padding: 7px 5px 0 5px;
+    color: #fff;
+}
+
+.border {
+    border: 1px solid #ddd;
+    background: #fff;
+    padding: 4px;
+}
