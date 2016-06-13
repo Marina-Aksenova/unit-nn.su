@@ -22,8 +22,12 @@ define([
                         if (inputAmount == 1) {
                             self.trigger('zero');
                         }
-                        self.input.val(self.getAmount() - 1);
+
+                        inputAmount -= 1;
+                        self.input.val(inputAmount);
                         self.trigger('decrement');
+
+                        self.send(self.product_id, inputAmount);
                     }
                 });
 
@@ -33,20 +37,7 @@ define([
                     self.input.val(inputAmount);
                     self.trigger('increment');
 
-                    $.ajax({
-                        url: '/cart/add',
-                        type: 'post',
-                        data: {product_id: self.product_id, amount: inputAmount},
-                        error: function (jqXHR, status, error) {
-                            var errorText = error;
-
-                            if (jqXHR.responseText) {
-                                errorText = jqXHR.responseText;
-                            }
-
-                            alert(errorText);
-                        }
-                    });
+                    self.send(self.product_id, inputAmount);
                 });
             }
         },
@@ -59,6 +50,22 @@ define([
             }
             
             return amount;
+        },
+        send: function (productId, amount) {
+            $.ajax({
+                url: '/cart/add',
+                type: 'post',
+                data: {product_id: productId, amount: amount},
+                error: function (jqXHR, status, error) {
+                    var errorText = error;
+
+                    if (jqXHR.responseText) {
+                        errorText = jqXHR.responseText;
+                    }
+
+                    alert(errorText);
+                }
+            });
         }
     });
 });

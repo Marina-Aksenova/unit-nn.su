@@ -10,7 +10,7 @@ use yii\web\View;
 /* @var $product Product */
 
 $this->registerJsFile('/js/shop/pages/shop.js', ['position' => View::POS_END]);
-$this->title = 'Магазин';
+$this->title = 'Корзина';
 ?>
 
 <div class="shop-container">
@@ -42,6 +42,7 @@ $this->title = 'Магазин';
                 <?php } else { ?>
                     Ваша корзина пуста
                 <?php } ?>
+            </div>
         </div>
     </div>
 </div>

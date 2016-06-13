@@ -10,10 +10,14 @@ use yii;
  * This is the model class for table "page".
  *
  * @property integer $id
+ * @property integer $product_id
+ * @property integer $order_id
+ * @property float $amount
  * @property string $date_create
  * @property string $date_change
  *
  * @property Order $order
+ * @property Product $product
  */
 class OrderItem extends BaseActiveRecord
 {
