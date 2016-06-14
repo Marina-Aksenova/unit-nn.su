@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\services\Excel;
 use yii;
 use app\models\Brand;
 use app\models\Page;

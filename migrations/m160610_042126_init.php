@@ -107,12 +107,12 @@ class m160610_042126_init extends Migration
                     $this->createTable('order_item', [
                         'id' => $this->primaryKey()->unsigned()->comment('Идентификатор записи'),
                         'order_id' => Schema::TYPE_INTEGER . ' UNSIGNED NOT NULL COMMENT "Идентификатор заказа"',
-                        'product_id' => Schema::TYPE_INTEGER . ' UNSIGNED NOT NULL COMMENT "Идентификатор продукта"',
-                        'amount' => $this->integer()->notNull()->comment('Количество данного товара'),
+                        'product_title' => $this->string(255)->notNull()->comment('Название продукта'),
+                        'price' => $this->decimal(20, 2)->unsigned()->notNull()->comment('Цена продукта'),
+                        'amount' => $this->integer()->unsigned()->notNull()->comment('Количество товара'),
                         'date_created' => Schema::TYPE_TIMESTAMP . ' DEFAULT CURRENT_TIMESTAMP COMMENT "Дата добавления записи"',
                         'date_updated' => Schema::TYPE_TIMESTAMP . ' DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Дата изменения записи"',
                         'date_deleted' => Schema::TYPE_TIMESTAMP . ' COMMENT "Дата удаления записи"',
-                        'FOREIGN KEY basket_2_product (product_id) REFERENCES `product` (id) ON DELETE CASCADE ON UPDATE CASCADE',
                         'FOREIGN KEY basket_2_order (order_id) REFERENCES `order` (id) ON DELETE CASCADE ON UPDATE CASCADE',
                     ]);
                 },

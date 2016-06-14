@@ -41,6 +41,7 @@ class CartController extends Controller
                 $orderItems[] = [
                     'product' => $product->title,
                     'amount' => $amount,
+                    'price' => $product->price_dealer,
                 ];
             }
         }
@@ -53,11 +54,31 @@ class CartController extends Controller
         return $this->render('index', ['order' => $order, 'dataProvider' => $dataProvider]);
     }
 
+    public function actionOrder($id)
+    {
+        if (!Yii::$app->getSession()->hasFlash('success')) {
+            $this->redirect('/');
+        }
+
+        if (!$order = Order::findOne($id)) {
+            throw new yii\base\UserException('Не найден товар с идентификатором ' . $id);
+        }
+
+        $dataProvider = new yii\data\ActiveDataProvider([
+            'query' => $order->getItems(),
+            'pagination' => false,
+        ]);
+
+        return $this->render('order', ['order' => $order, 'dataProvider' => $dataProvider]);
+    }
+
     public function actionSubmit()
     {
         $transaction = Yii::$app->getDb()->beginTransaction();
         try {
-            $orderData = Yii::$app->getSession()->get('order');
+            if (!$orderData = Yii::$app->getSession()->get('order')) {
+                throw new yii\base\UserException('Ваша корзина пуста');
+            }
             $order = new Order();
 
             if ($userId = Yii::$app->getUser()->getId()) {
@@ -72,15 +93,17 @@ class CartController extends Controller
                 }
                 $orderItem = new OrderItem([
                     'order_id' => $order->id,
-                    'product_id' => $product->id,
+                    'product_title' => $product->title,
+                    'price' => $product->price_dealer,
                     'amount' => $amount,
                 ]);
                 $orderItem->saveOrError();
             }
 
             $transaction->commit();
+            Yii::$app->getSession()->setFlash('success', 'Ваш заказ успешно отправлен. Мы свяжемся с Вами в ближайшее время.');
             Yii::$app->getSession()->set('order', null);
-            $this->redirect('/');
+            $this->redirect('/cart/order/' . $order->id);
         } catch (\Exception $exception) {
             $transaction->rollBack();
             throw $exception;

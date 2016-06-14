@@ -59,6 +59,9 @@ $config = [
 
                 // Module
                 '<module:[a-zA-Z0-9-_]+>/<controller:[a-zA-Z-_]+>/<action:[a-zA-Z-_]+>/<id:\d+>' => '<module>/<controller>/<action>',
+
+                // Controller
+                '<controller:[a-zA-Z-_]+>/<action:[a-zA-Z-_]+>/<id:\d+>' => '<controller>/<action>',
             ],
         ],
         'log' => [

@@ -12,16 +12,35 @@ $this->title = 'История заказов - Юнит-НН';
 
 <div class="margin-top-60 history">
     <h1>История заказов</h1>
-    <div class="row history-orders">
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            <?php foreach ($orders as $order) { ?>
-                <div class="panel panel-default">
+    <div class="row">
+        <div class="panel-group content-padding" id="accordion" role="tablist" aria-multiselectable="true">
+            <?php foreach ($orders as $order) {
+                $total = 0;
+                $items = '';
+                foreach ($order->items as $orderItem) {
+                    $total += $orderItem->price * $orderItem->amount;
+                    $items .=
+                        '<tr>'.
+                            '<td>' . $orderItem->product_title . '</td>' .
+                            '<td>' . $orderItem->price . '</td>' .
+                            '<td>' . $orderItem->amount . '</td>' .
+                            '<td>' . number_format($orderItem->price * $orderItem->amount, 2, ',', ' ') . '</td>' .
+                        '</tr>';
+                }
+            ?>
+                    <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="heading-<?= $order->id; ?>">
                         <h4 class="panel-title">
                             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
                                href="#collapse-<?= $order->id; ?>" aria-expanded="false"
                                aria-controls="collapse-<?= $order->id; ?>">
-                                <?= date('d.m.Y H:i', strtotime($order->date_created)); ?>
+                                <div class="pull-left">
+                                    <?= date('d.m.Y H:i', strtotime($order->date_created)); ?>
+                                </div>
+                                <div class="pull-right">
+                                    <strong><?= number_format($total, 2, ',', ' '); ?></strong>
+                                </div>
+                                <div class="clearfix"></div>
                             </a>
                         </h4>
                     </div>
@@ -29,12 +48,17 @@ $this->title = 'История заказов - Юнит-НН';
                          aria-labelledby="heading-<?= $order->id; ?>">
                         <div class="panel-body">
                             <table class="table">
-                                <?php foreach ($order->items as $item) { ?>
                                 <tr>
-                                    <td><?= $item->product->title; ?></td>
-                                    <td><?= $item->amount; ?></td>
+                                    <th>Название</th>
+                                    <th>Цена</th>
+                                    <th>Количество</th>
+                                    <th>Сумма</th>
                                 </tr>
-                                <?php } ?>
+                                <?= $items; ?>
+                                <tr>
+                                    <td colspan="3"><strong>Итого</strong></td>
+                                    <td><strong><?= number_format($total, 2, ',', ' '); ?></strong></td>
+                                </tr>
                             </table>
                         </div>
                     </div>

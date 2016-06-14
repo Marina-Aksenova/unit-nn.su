@@ -35,7 +35,7 @@ class BaseActiveRecord extends ActiveRecord
 
     public static function field($field)
     {
-        return static::tableName() . '.[[' . $field . ']]';
+        return '{{' . static::tableName() . '}}.[[' . $field . ']]';
     }
 
     public function validateOrError($attributeNames = null, $clearErrors = true)

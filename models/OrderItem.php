@@ -10,14 +10,14 @@ use yii;
  * This is the model class for table "page".
  *
  * @property integer $id
- * @property integer $product_id
+ * @property integer $product_title
  * @property integer $order_id
- * @property float $amount
+ * @property integer $amount
+ * @property float $price
  * @property string $date_create
  * @property string $date_change
  *
  * @property Order $order
- * @property Product $product
  */
 class OrderItem extends BaseActiveRecord
 {
@@ -38,11 +38,14 @@ class OrderItem extends BaseActiveRecord
             [['order_id'], 'required'],
             [['order_id'], 'exist', 'targetClass' => Order::className(), 'targetAttribute' => 'id'],
 
-            [['product_id'], 'required'],
-            [['product_id'], 'exist', 'targetClass' => Product::className(), 'targetAttribute' => 'id'],
+            [['product_title'], 'required'],
+            [['product_title'], 'string', 'max' => 255],
 
             [['amount'], 'required'],
             [['amount'], 'integer', 'min' => 1],
+
+            [['price'], 'required'],
+            [['price'], 'double', 'min' => 0.01],
         ];
     }
 
@@ -54,6 +57,8 @@ class OrderItem extends BaseActiveRecord
         return [
             'id' => 'ID',
             'amount' => 'Количество',
+            'product_title' => 'Название',
+            'price' => 'Цена',
         ];
     }
 
@@ -63,13 +68,5 @@ class OrderItem extends BaseActiveRecord
     public function getOrder()
     {
         return $this->hasOne(Order::className(), ['id' => 'order_id']);
-    }
-
-    /**
-     * @return BaseQuery
-     */
-    public function getProduct()
-    {
-        return $this->hasOne(Product::className(), ['id' => 'product_id']);
     }
 }

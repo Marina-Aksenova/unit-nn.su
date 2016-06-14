@@ -127,7 +127,7 @@ class User extends BaseActiveRecord implements IdentityInterface
 
     public function validateAuthKey($authKey)
     {
-        throw new UserException('Системная ошибка');
+        return $this->authKey === $authKey;
     }
 
     public static function findIdentityByAccessToken($token, $type = null)
