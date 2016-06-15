@@ -54,9 +54,9 @@ $this->title = 'Магазин';
                                 'content' => function(Product $product) use($order) {
                                     $amount = ArrayHelper::getValue($order, $product->id, 0);
                                     $spanMinus = Html::tag('span', '', ['class' => 'glyphicon glyphicon-minus']);
-                                    $buttonMinus = Html::tag('div', $spanMinus, ['class' => 'btn btn-default btn-xs button-minus']);
+                                    $buttonMinus = Html::tag('button', $spanMinus, ['class' => 'btn btn-default btn-xs button-minus']);
                                     $spanPlus = Html::tag('span', '', ['class' => 'glyphicon glyphicon-plus']);
-                                    $buttonPlus = Html::tag('div', $spanPlus, ['class' => 'btn btn-default btn-xs button-plus']);
+                                    $buttonPlus = Html::tag('button', $spanPlus, ['class' => 'btn btn-default btn-xs button-plus']);
                                     $input = Html::input('text', 'amount', $amount, ['class' => 'form-control input-sm input-amount']);
 
                                     return Html::tag('div', $buttonMinus . $input . $buttonPlus, ['class' => 'component-amount']);

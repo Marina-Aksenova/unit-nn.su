@@ -78,12 +78,22 @@ $controller = Yii::$app->controller;
             ],
             [
                 'label' => '<span class="glyphicon glyphicon-user"></span>',
-                'url' => ['/cabinet'], 'encode' => false,
+                'url' => ['/cabinet'],
+                'encode' => false,
                 'visible' => !Yii::$app->getUser()->getIsGuest(),
                 'items' => [
                     ['label' => 'Личный кабинет', 'url' => ['/cabinet']],
                     ['label' => 'Выход', 'url' => ['/site/logout']],
-                ]],
+                ],
+            ],
+            '<a href="/cart" class="btn btn-danger navbar-btn cart">
+                <div>
+                    <strong class="cart-quantity">17</strong> <span class="glyphicon glyphicon-shopping-cart">
+                </div>
+                <div class="cart-amount">
+                    1 284,17
+                </div>
+            </a>',
         ],
     ]); ?>
     <?php NavBar::end(); ?>

@@ -267,3 +267,12 @@ a, a:focus, a:hover {
     margin: 20px 0 0 0;
 }
 
+.cart {
+    padding: 0 12px 0 12px;
+}
+
+.cart-amount {
+    margin-top: -1px;
+    padding-bottom: 2px;
+    font-size: 10px;
+}
