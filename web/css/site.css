@@ -267,6 +267,11 @@ a, a:focus, a:hover {
     margin: 20px 0 0 0;
 }
 
+.success .input-amount {
+    font-weight: bold;
+    font-size: 16px;
+}
+
 body .navbar-nav li.cart a {
     color: green;
 }
@@ -279,4 +284,8 @@ body .navbar-nav li.cart a {
 
 .navbar .navbar-collapse {
     margin-left: 145px;
+}
+
+.component-amount {
+    min-width: 105px;
 }

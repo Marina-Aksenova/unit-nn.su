@@ -23,9 +23,9 @@ $this->title = 'История заказов - Юнит-НН';
                     $items .=
                         '<tr>'.
                             '<td>' . $orderItem->product_title . '</td>' .
-                            '<td>' . $orderItem->price . '</td>' .
-                            '<td>' . $orderItem->amount . '</td>' .
-                            '<td>' . BaseService::getFormattedPrice($orderItem->price * $orderItem->amount) . '</td>' .
+                            '<td class="text-center">' . BaseService::getFormattedPrice($orderItem->price ) . '</td>' .
+                            '<td class="text-center">' . $orderItem->amount . '</td>' .
+                            '<td class="text-center">' . BaseService::getFormattedPrice($orderItem->price * $orderItem->amount) . '</td>' .
                         '</tr>';
                 }
             ?>
@@ -51,14 +51,14 @@ $this->title = 'История заказов - Юнит-НН';
                             <table class="table">
                                 <tr>
                                     <th>Название</th>
-                                    <th>Цена</th>
-                                    <th>Количество</th>
-                                    <th>Сумма</th>
+                                    <th class="text-center">Цена</th>
+                                    <th class="text-center">Количество</th>
+                                    <th class="text-center">Сумма</th>
                                 </tr>
                                 <?= $items; ?>
                                 <tr>
                                     <td colspan="3"><strong>Итого</strong></td>
-                                    <td><strong><?= BaseService::getFormattedPrice($total); ?></strong></td>
+                                    <td class="text-center"><strong><?= BaseService::getFormattedPrice($total); ?></strong></td>
                                 </tr>
                             </table>
                         </div>

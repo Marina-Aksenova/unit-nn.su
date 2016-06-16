@@ -21,17 +21,23 @@ define('shop', [
                 });
                 amountComponent.on('increment', function () {
                     row.addClass('success');
+                    cart.set(amountComponent.getAmount(), productId);
                     self.send(amountComponent.getAmount(), productId);
                 });
                 amountComponent.on('decrement', function () {
                     self.send(amountComponent.getAmount(), productId);
+                    cart.set(amountComponent.getAmount(), productId);
                 });
                 amountComponent.on('zero', function () {
                     row.removeClass('success');
                 });
                 amountComponent.on('input', function () {
-                    row.removeClass('success');
-                    cart.recalculate();
+                    if (amountComponent.getAmount() > 0) {
+                        row.addClass('success');
+                    } else {
+                        row.removeClass('success');
+                    }
+                    cart.set(amountComponent.getAmount(), productId);
                 });
             });
         },

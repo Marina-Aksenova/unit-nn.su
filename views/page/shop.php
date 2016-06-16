@@ -53,12 +53,21 @@ $this->title = 'Магазин';
                             'title',
                             [
                                 'attribute' => 'price_dealer',
+                                'headerOptions' => [
+                                    'class' => 'text-center',
+                                ],
+                                'contentOptions' => ['class' => 'text-center'],
                                 'value' => function (Product $product){
                                     return BaseService::getFormattedPrice($product->price_dealer);
                                 },
                             ],
                             [
                                 'class' => Column::className(),
+                                'header' => 'Количество',
+                                'headerOptions' => [
+                                    'class' => 'text-center',
+                                ],
+                                'contentOptions' => ['class' => 'text-center'],
                                 'content' => function (Product $product) use ($order){
                                     $amount = ArrayHelper::getValue($order, $product->id, 0);
                                     $spanMinus = Html::tag('span', '', ['class' => 'glyphicon glyphicon-minus']);

@@ -21,11 +21,11 @@ define([
 
                 if (self.amount > 0) {
                     self.input.val(self.amount);
-                    self.trigger('input');
                 } else {
                     self.amount = 0;
                     self.input.val(self.amount);
                 }
+                self.trigger('input');
             });
 
             self.buttonMinus.on('click', function () {

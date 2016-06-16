@@ -10,38 +10,21 @@ define([
             self.quantityElement = $('.cart-quantity');
             self.quantity = parseInt(self.quantityElement.text()) || 0;
         },
-        recalculate: function () {
+        set: function (amount, productId) {
             var self = this;
+
+            order[productId] = amount;
             self.quantity = 0;
-            //
-            // $('.input-amount').each(function(index, value) {
-            //
-            // });
-            // self.quantityElement.text(self.quantity);
-            //
-            // if (self.quantity > 0) {
-            //     self.container.removeClass('hidden');
-            //
-            // } else {
-            //     self.container.addClass('hidden');
-            // }
-        },
-        increment: function () {
-            var self = this;
 
-            self.container.removeClass('hidden');
-            self.quantity++;
-            self.quantityElement.text(self.quantity);
-        },
-        decrement: function () {
-            var self = this;
+            _.each(order, function (quantity) {
+                quantity = parseInt(quantity) || 0;
+                self.quantity += parseInt(quantity);
+            });
 
-            self.quantity--;
-
-            if (self.quantity === 0) {
-                self.container.addClass('hidden');
+            if (self.quantity) {
+                self.container.removeClass('hidden');
             }
-
+            
             self.quantityElement.text(self.quantity);
         }
     });

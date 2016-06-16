@@ -8,6 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Json;
 use yii\web\View;
 
 AppAsset::register($this);
@@ -35,7 +36,13 @@ if ($order = Yii::$app->getSession()->get('order')) {
     foreach ($order as $item) {
         $cartQuantity += $item;
     }
+} else {
+    $order = [];
 }
+
+$this->registerJs("
+    var order = " . Json::encode($order) . ";
+", View::POS_HEAD);
 
 $this->beginPage();
 ?>

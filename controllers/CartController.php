@@ -1,12 +1,14 @@
 <?php
 namespace app\controllers;
 
+use app\components\services\Validator;
 use app\models\Order;
 use app\models\OrderItem;
 use app\models\Product;
 use yii;
 use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
+use yii\validators\EmailValidator;
 use yii\web\Controller;
 
 class CartController extends Controller
@@ -51,7 +53,11 @@ class CartController extends Controller
             'pagination' => false,
         ]);
 
-        return $this->render('index', ['order' => $order, 'dataProvider' => $dataProvider]);
+        return $this->render('index', [
+            'order' => $order,
+            'dataProvider' => $dataProvider,
+            'error' => (bool) (Yii::$app->getRequest()->get('error')  !== null),
+        ]);
     }
 
     public function actionOrder($id)
@@ -76,6 +82,13 @@ class CartController extends Controller
     {
         $transaction = Yii::$app->getDb()->beginTransaction();
         try {
+            if (Yii::$app->getUser()->getIsGuest()) {
+                $emailValidator = new EmailValidator();
+                if (!($email = Yii::$app->getRequest()->post('email')) || !$emailValidator->validate($email)) {
+                    return $this->redirect('/cart/index?error');
+                }
+            }
+
             if (!$orderData = Yii::$app->getSession()->get('order')) {
                 throw new yii\base\UserException('Ваша корзина пуста');
             }
