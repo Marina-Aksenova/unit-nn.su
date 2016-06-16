@@ -7,24 +7,50 @@ define('shop', [
 ], function (_, Backbone, OrderItemModel, AmountComponent, CartComponent) {
     return Backbone.View.extend({
         render: function () {
-            var products = [];
+            var self = this;
             var cart = new CartComponent();
 
             $('table tbody tr').each(function (index, row) {
                 row = $(row);
+                var productId = row.data('key');
+                var price = row.data('price');
 
                 // Обработка контейнера с количеством
                 var amountComponent = new AmountComponent({
-                    container: row.find('.component-amount'),
-                    product_id: row.data('key')
+                    container: row.find('.component-amount')
                 });
                 amountComponent.on('increment', function () {
                     row.addClass('success');
+                    self.send(amountComponent.getAmount(), productId);
+                });
+                amountComponent.on('decrement', function () {
+                    self.send(amountComponent.getAmount(), productId);
                 });
                 amountComponent.on('zero', function () {
                     row.removeClass('success');
                 });
+                amountComponent.on('input', function () {
+                    row.removeClass('success');
+                    cart.recalculate();
+                });
             });
+        },
+        send: function(amount, productId) {
+            $.ajax({
+                url: '/cart/add',
+                type: 'post',
+                data: {product_id: productId, amount: amount},
+                error: function (jqXHR, status, error) {
+                    var errorText = error;
+
+                    if (jqXHR.responseText) {
+                        errorText = jqXHR.responseText;
+                    }
+
+                    alert(errorText);
+                }
+            });
+
         }
     });
 });

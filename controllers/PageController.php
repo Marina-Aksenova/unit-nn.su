@@ -37,7 +37,7 @@ class PageController extends Controller
     {
 //        Excel::import();
         $order = Yii::$app->getSession()->get('order');
-        
+
         $dataProvider = new ActiveDataProvider([
             'query' => Product::find(),
         ]);

@@ -7,65 +7,47 @@ define([
             var self = this;
 
             self.container = options.container;
-            self.product_id = options.product_id;
+            self.buttonMinus = self.container.find('.button-minus');
+            self.buttonPlus = self.container.find('.button-plus');
+            self.input = self.container.find('.input-amount');
+            self.amount = parseInt(self.input.val()) || 0;
 
-            if (self.container) {
-                self.buttonMinus = self.container.find('.button-minus');
-                self.buttonPlus = self.container.find('.button-plus');
-                self.input = self.container.find('.input-amount');
-                var amount = self.getAmount();
+            self.input.on('click', function () {
+                $(this).select();
+            });
 
-                self.buttonMinus.on('click', function () {
-                    var inputAmount = parseInt(self.getAmount()) || 0;
+            self.input.on('keyup', function () {
+                self.amount = parseInt(self.input.val()) || 0;
 
-                    if (inputAmount > 0) {
-                        if (inputAmount == 1) {
-                            self.trigger('zero');
-                        }
-
-                        inputAmount -= 1;
-                        self.input.val(inputAmount);
-                        self.trigger('decrement');
-
-                        self.send(self.product_id, inputAmount);
-                    }
-                });
-
-                self.buttonPlus.on('click', function () {
-                    var inputAmount = parseInt(self.getAmount()) || 0;
-                    inputAmount += 1;
-                    self.input.val(inputAmount);
-                    self.trigger('increment');
-
-                    self.send(self.product_id, inputAmount);
-                });
-            }
-        },
-        getAmount: function () {
-            var self = this;
-            var amount = null;
-            
-            if (self.input) {
-                amount = self.input.val();
-            }
-            
-            return amount;
-        },
-        send: function (productId, amount) {
-            $.ajax({
-                url: '/cart/add',
-                type: 'post',
-                data: {product_id: productId, amount: amount},
-                error: function (jqXHR, status, error) {
-                    var errorText = error;
-
-                    if (jqXHR.responseText) {
-                        errorText = jqXHR.responseText;
-                    }
-
-                    alert(errorText);
+                if (self.amount > 0) {
+                    self.input.val(self.amount);
+                    self.trigger('input');
+                } else {
+                    self.amount = 0;
+                    self.input.val(self.amount);
                 }
             });
+
+            self.buttonMinus.on('click', function () {
+                if (self.amount > 0) {
+                    if (self.amount == 1) {
+                        self.trigger('zero');
+                    }
+
+                    self.amount -= 1;
+                    self.input.val(self.amount);
+                    self.trigger('decrement');
+                }
+            });
+
+            self.buttonPlus.on('click', function () {
+                self.amount += 1;
+                self.input.val(self.amount);
+                self.trigger('increment');
+            });
+        },
+        getAmount: function () {
+            return this.amount;
         }
     });
 });

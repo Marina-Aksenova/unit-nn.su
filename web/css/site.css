@@ -94,7 +94,7 @@ a.desc:after {
 }
 
 .navbar-info-phone {
-    margin: 16px 0 0 10%;
+    margin: 16px 0 0 3%;
     text-align: center;
     float: left;
     line-height: 17px;
@@ -267,12 +267,16 @@ a, a:focus, a:hover {
     margin: 20px 0 0 0;
 }
 
-.cart {
-    padding: 0 12px 0 12px;
+body .navbar-nav li.cart a {
+    color: green;
 }
 
 .cart-amount {
     margin-top: -1px;
     padding-bottom: 2px;
     font-size: 10px;
+}
+
+.navbar .navbar-collapse {
+    margin-left: 145px;
 }

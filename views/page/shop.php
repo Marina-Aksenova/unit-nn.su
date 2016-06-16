@@ -34,7 +34,9 @@ $this->title = 'Магазин';
                     <?php Pjax::begin(); ?>
                     <?= GridView::widget([
                         'rowOptions' => function (Product $product) use ($order){
-                            $rowOptions = [];
+                            $rowOptions = [
+                                'data-price' => $product->price_dealer,
+                            ];
 
                             if ($amount = ArrayHelper::getValue($order, $product->id, '')) {
                                 $rowOptions['class'] = 'success';

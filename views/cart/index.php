@@ -17,8 +17,8 @@ $this->title = 'Корзина';
 <div class="shop-container">
     <div class="panel panel-default">
         <div class="panel-body content-padding">
-            <h2>Детали вашего заказа:</h2>
             <?php if ($dataProvider->getCount()) { ?>
+            <h2>Детали вашего заказа:</h2>
             <div>
                 <?= GridView::widget([
                     'layout' => "{items}\n{pager}",
@@ -51,9 +51,9 @@ $this->title = 'Корзина';
                 ]); ?>
                 <a href="/cart/submit" class="btn btn-primary">Заказать</a>
             </div>
+            <?php } else { ?>
+                Ваша корзина пуста
+            <?php } ?>
         </div>
-        <?php } else { ?>
-            Ваша корзина пуста
-        <?php } ?>
     </div>
 </div>

@@ -6,6 +6,7 @@
 use app\assets\AppAsset;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\web\View;
 
@@ -27,8 +28,17 @@ $this->registerJs("
 ");
 
 $controller = Yii::$app->controller;
+
+// Подсчёт количества товаров в корзине
+$cartQuantity = 0;
+if ($order = Yii::$app->getSession()->get('order')) {
+    foreach ($order as $item) {
+        $cartQuantity += $item;
+    }
+}
+
+$this->beginPage();
 ?>
-<?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
@@ -55,8 +65,8 @@ $controller = Yii::$app->controller;
             'class' => 'navbar-fixed-top navbar-default',
         ],
     ]); ?>
-    <div class="navbar-info navbar-info-phone hidden-sm hidden-md hidden-xs">
-        <div class="hidden-md header-phone">
+    <div class="navbar-info navbar-info-phone hidden-sm hidden-xs">
+        <div class="header-phone">
             <?= Html::a('+7 (831) 220-94-33', 'tel:+78312209433') ?>
         </div>
     </div>
@@ -86,14 +96,14 @@ $controller = Yii::$app->controller;
                     ['label' => 'Выход', 'url' => ['/site/logout']],
                 ],
             ],
-            '<a href="/cart" class="btn btn-danger navbar-btn cart">
-                <div>
-                    <strong class="cart-quantity">17</strong> <span class="glyphicon glyphicon-shopping-cart">
-                </div>
-                <div class="cart-amount">
-                    1 284,17
-                </div>
-            </a>',
+            [
+                'label' => '<strong class="cart-quantity">' . $cartQuantity . '</strong> <span class="glyphicon glyphicon-shopping-cart">',
+                'url' => ['/cart'],
+                'encode' => false,
+                'options' => [
+                    'class' => 'cart ' . ($cartQuantity ? '' : 'hidden'),
+                ],
+            ],
         ],
     ]); ?>
     <?php NavBar::end(); ?>

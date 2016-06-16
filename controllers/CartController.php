@@ -120,7 +120,8 @@ class CartController extends Controller
             throw new yii\base\UserException('Не передан идентификатор товара');
         }
 
-        if (!$amount = yii\helpers\ArrayHelper::getValue($data, 'amount')) {
+        $amount = yii\helpers\ArrayHelper::getValue($data, 'amount', null);
+        if ($amount === null) {
             throw new yii\base\UserException('Не передано количество товара');
         }
 
@@ -129,7 +130,14 @@ class CartController extends Controller
         }
 
         $order = Yii::$app->getSession()->get('order');
-        $order[$product->id] = $amount;
+
+        // Удаление товара из корзины если пришёл 0
+        if ($amount == 0) {
+            unset($order[$product->id]);
+        } else {
+            $order[$product->id] = $amount;
+        }
+
         Yii::$app->getSession()->set('order', $order);
     }
 }
