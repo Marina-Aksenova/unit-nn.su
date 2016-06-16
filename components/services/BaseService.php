@@ -40,4 +40,9 @@ class BaseService extends Component
     {
         return $value ? (float)$value : null;
     }
+    
+    public static function getFormattedPrice($price)
+    {
+        return number_format($price, 2, ',', ' ');
+    }
 }

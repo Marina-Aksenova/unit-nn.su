@@ -1,4 +1,5 @@
 <?php
+use app\components\services\BaseService;
 use app\models\Product;
 use yii\data\ActiveDataProvider;
 use yii\grid\Column;
@@ -32,7 +33,7 @@ $this->title = 'Магазин';
                 <div class="col-lg-9 col-md-9">
                     <?php Pjax::begin(); ?>
                     <?= GridView::widget([
-                        'rowOptions' => function (Product $product) use($order) {
+                        'rowOptions' => function (Product $product) use ($order){
                             $rowOptions = [];
 
                             if ($amount = ArrayHelper::getValue($order, $product->id, '')) {
@@ -41,7 +42,6 @@ $this->title = 'Магазин';
 
                             return $rowOptions;
                         },
-                        'showHeader' => false,
                         'layout' => "{items}\n{pager}",
                         'tableOptions' => [
                             'class' => 'table',
@@ -50,8 +50,14 @@ $this->title = 'Магазин';
                         'columns' => [
                             'title',
                             [
+                                'attribute' => 'price_dealer',
+                                'value' => function (Product $product){
+                                    return BaseService::getFormattedPrice($product->price_dealer);
+                                },
+                            ],
+                            [
                                 'class' => Column::className(),
-                                'content' => function(Product $product) use($order) {
+                                'content' => function (Product $product) use ($order){
                                     $amount = ArrayHelper::getValue($order, $product->id, 0);
                                     $spanMinus = Html::tag('span', '', ['class' => 'glyphicon glyphicon-minus']);
                                     $buttonMinus = Html::tag('button', $spanMinus, ['class' => 'btn btn-default btn-xs button-minus']);

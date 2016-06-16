@@ -1,4 +1,5 @@
 <?php
+use app\components\services\BaseService;
 use app\models\Order;
 use app\models\OrderItem;
 
@@ -24,7 +25,7 @@ $this->title = 'История заказов - Юнит-НН';
                             '<td>' . $orderItem->product_title . '</td>' .
                             '<td>' . $orderItem->price . '</td>' .
                             '<td>' . $orderItem->amount . '</td>' .
-                            '<td>' . number_format($orderItem->price * $orderItem->amount, 2, ',', ' ') . '</td>' .
+                            '<td>' . BaseService::getFormattedPrice($orderItem->price * $orderItem->amount) . '</td>' .
                         '</tr>';
                 }
             ?>
@@ -38,7 +39,7 @@ $this->title = 'История заказов - Юнит-НН';
                                     <?= date('d.m.Y H:i', strtotime($order->date_created)); ?>
                                 </div>
                                 <div class="pull-right">
-                                    <strong><?= number_format($total, 2, ',', ' '); ?></strong>
+                                    <strong><?= BaseService::getFormattedPrice($total); ?></strong>
                                 </div>
                                 <div class="clearfix"></div>
                             </a>
@@ -57,7 +58,7 @@ $this->title = 'История заказов - Юнит-НН';
                                 <?= $items; ?>
                                 <tr>
                                     <td colspan="3"><strong>Итого</strong></td>
-                                    <td><strong><?= number_format($total, 2, ',', ' '); ?></strong></td>
+                                    <td><strong><?= BaseService::getFormattedPrice($total); ?></strong></td>
                                 </tr>
                             </table>
                         </div>

@@ -1,4 +1,5 @@
 <?php
+use app\components\services\BaseService;
 use app\models\Product;
 use yii\data\ArrayDataProvider;
 use yii\grid\GridView;
@@ -32,7 +33,7 @@ $this->title = 'Корзина';
                         ],
                         [
                             'value' => function ($orderItem){
-                                return number_format($orderItem['price'], 2, ',', ' ');
+                                return BaseService::getFormattedPrice($orderItem['price']);
                             },
                             'label' => 'Цена',
                         ],
@@ -42,7 +43,7 @@ $this->title = 'Корзина';
                         ],
                         [
                             'value' => function ($orderItem){
-                                return number_format($orderItem['price'] * $orderItem['amount'], 2, ',', ' ');
+                                return BaseService::getFormattedPrice($orderItem['price'] * $orderItem['amount']);
                             },
                             'label' => 'Сумма',
                         ],

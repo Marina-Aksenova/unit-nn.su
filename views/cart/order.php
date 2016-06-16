@@ -1,4 +1,5 @@
 <?php
+use app\components\services\BaseService;
 use app\models\OrderItem;
 use app\models\Product;
 use yii\data\ArrayDataProvider;
@@ -31,13 +32,13 @@ $this->title = 'Заказ';
                     'product_title',
                     [
                         'value' => function (OrderItem $orderItem){
-                            return number_format($orderItem->price, 2, ',', ' ');
+                            return BaseService::getFormattedPrice($orderItem->price);
                         },
                     ],
                     'amount',
                     [
                         'value' => function (OrderItem $orderItem){
-                            return number_format($orderItem->price * $orderItem->amount, 2, ',', ' ');
+                            return BaseService::getFormattedPrice($orderItem->price * $orderItem->amount);
                         },
                     ],
                 ],

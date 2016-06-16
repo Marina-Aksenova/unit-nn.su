@@ -3,6 +3,7 @@
 namespace app\models;
 
 use app\components\BaseActiveRecord;
+use app\components\services\BaseService;
 use yii;
 
 /**
@@ -61,7 +62,7 @@ class Product extends BaseActiveRecord
         return [
             'id' => 'ID',
             'title' => 'Название',
-            'text' => 'Текст',
+            'price_dealer' => 'Цена',
             'date_create' => 'Date Create',
             'date_change' => 'Date Change',
         ];
