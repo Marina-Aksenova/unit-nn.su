@@ -14,8 +14,9 @@ use yii\web\View;
 /* @var $product Product */
 
 $total = 0;
-if (!empty($dataProvider->getModels())) {
-    foreach ($dataProvider->getModels() as $orderItem) {
+$models = $dataProvider->getModels();
+if (!empty($models)) {
+    foreach ($models as $orderItem) {
         $total += $orderItem['price'] * $orderItem['amount'];
     }
 }
