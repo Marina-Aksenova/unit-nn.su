@@ -3,8 +3,9 @@ define('shop', [
     'backbone',
     'models/orderItem',
     'components/amount',
-    'components/cart'
-], function (_, Backbone, OrderItemModel, AmountComponent, CartComponent) {
+    'components/cart',
+    'treeview'
+], function (_, Backbone, OrderItemModel, AmountComponent, CartComponent, TreeView) {
     return Backbone.View.extend({
         render: function () {
             var self = this;
@@ -39,6 +40,22 @@ define('shop', [
                     }
                     cart.set(amountComponent.getAmount(), productId);
                 });
+            });
+            
+            // Меню
+            $('#tree').treeview({
+                data: treeData,
+                levels: 5,
+                backColor: 'green',
+                onNodeSelected: function(event, data) {
+
+                    if (data.brandId) {
+                        $('[name="ProductFilter[brand_id]"]').val(data.brandId)
+                        $("#products-grid").yiiGridView("applyFilter");
+                    }
+
+                    return false;
+                }
             });
         },
         send: function(amount, productId) {

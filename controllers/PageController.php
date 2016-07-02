@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\components\services\Excel;
+use app\models\ProductFilter;
 use yii;
 use app\models\Brand;
 use app\models\Page;
@@ -35,15 +36,15 @@ class PageController extends Controller
 
     public function actionShop()
     {
-//        Excel::import();
         $order = Yii::$app->getSession()->get('order');
+        $filterModel = new ProductFilter();
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => Product::find(),
-        ]);
+        $dataProvider = $filterModel->search(Yii::$app->request->get());
+        // ['ProductFilter' => ['brand_id' => 16]]
 
         return $this->render('shop', [
             'dataProvider' => $dataProvider,
+            'filterModel' => $filterModel,
             'brands' => Brand::find()->all(),
             'order' => $order,
         ]);

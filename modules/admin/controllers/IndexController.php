@@ -3,6 +3,7 @@
 namespace app\modules\admin\controllers;
 
 use app\models\Page;
+use app\models\User;
 use yii\base\UserException;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -16,12 +17,10 @@ class IndexController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
-                    // allow authenticated users
                     [
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => [User::ROLE_ADMIN]
                     ],
-                    // everything else is denied by default
                 ],
             ],
         ];
@@ -35,13 +34,10 @@ class IndexController extends Controller
     public function actionUpdate($id)
     {
         if (!$page = Page::findOne($id)) {
-//            throw new UserException('Страница номер "' . $id . '" не найдена');
             throw new UserException('Страница не найдена');
         }
 
         if ($page->load(Yii::$app->getRequest()->post()) && $page->save()) {
-            
-
             return $this->redirect('/admin/');
         }
 

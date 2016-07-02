@@ -74,17 +74,18 @@ $this->title = 'Корзина';
                 ]); ?>
 
                 <?php $submitButton = Html::button('Заказать', ['type' => 'submit', 'class' => 'btn btn-primary']); ?>
+
+                <?= Html::beginForm('/cart/submit', 'post', ['class' => 'form-inline']) ?>
                 <?php if (Yii::$app->getUser()->getIdentity()) {
                     echo $submitButton;
                 } else { ?>
-                    <?= Html::beginForm('/cart/submit', 'post', ['class' => 'form-inline']) ?>
                         <div class="form-group <?= ($error ? 'has-error' : '') ?>">
                             <label class="control-label" for="email">Электропочта для связи</label>
                             <input name="email" type="text" class="form-control" id="email" placeholder="Электропочта">
                         </div>
                         <?= $submitButton ?>
-                    <?= Html::endForm() ?>
                 <?php } ?>
+                <?= Html::endForm() ?>
             </div>
             <?php } else { ?>
                 Ваша корзина пуста

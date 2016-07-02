@@ -168,7 +168,7 @@ $this->beginPage();
             </div>
         </div>
 
-        <div class="container margin-top-20">
+        <div class="container<?= ($controller->id === 'page' && $controller->action->id === 'shop' ? '-fluid': '') ?> margin-top-20">
             <?php if ($controller->id !== 'page' || in_array($controller->action->id, ['shop', 'login'])) {
                 echo $content;
             } else { ?>

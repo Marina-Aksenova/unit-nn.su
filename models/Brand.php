@@ -12,6 +12,8 @@ use yii;
  * @property string $title
  * @property string $date_create
  * @property string $date_change
+
+ * @property Product[] $products
  */
 class Brand extends BaseActiveRecord
 {
@@ -45,5 +47,23 @@ class Brand extends BaseActiveRecord
             'date_create' => 'Date Create',
             'date_change' => 'Date Change',
         ];
+    }
+
+    public function getProductsForTree()
+    {
+        $tree = [];
+
+        foreach ($this->products as $product) {
+            $tree[] = [
+                'text' => $product->title,
+            ];
+        }
+
+        return $tree;
+    }
+
+    public function getProducts()
+    {
+        return $this->hasMany(Product::className(), ['brand_id' => 'id']);
     }
 }

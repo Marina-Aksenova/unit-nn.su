@@ -1,11 +1,13 @@
 <?php
 use app\components\services\BaseService;
+use app\models\Brand;
 use app\models\Product;
 use yii\data\ActiveDataProvider;
 use yii\grid\Column;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Json;
 use yii\web\View;
 use yii\widgets\Pjax;
 
@@ -14,9 +16,31 @@ use yii\widgets\Pjax;
 /* @var $brands array */
 /* @var $order array */
 /* @var $product Product */
+/* @var $filterModel Product */
+
+$this->title = 'Магазин';
 
 $this->registerJsFile('/js/shop/pages/shop.js', ['position' => View::POS_END]);
-$this->title = 'Магазин';
+$this->registerCssFile('/js/static/treeview/src/css/bootstrap-treeview.css', ['position' => View::POS_BEGIN]);
+
+$tree = [];
+/** @var Brand $brand */
+foreach ($brands as $brand) {
+    $tree[] = [
+        'text' => $brand->title,
+        'brandId' => $brand->id,
+        'nodes' => $brand->getProductsForTree(),
+        'state' => [
+            'expanded' => false,
+        ],
+    ];
+}
+
+$this->registerJs("
+        var treeData = " . Json::encode($tree) . ";
+",
+View::POS_BEGIN
+);
 ?>
 
 <div class="shop-container">
@@ -25,14 +49,15 @@ $this->title = 'Магазин';
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <?php foreach ($brands as $brand) { ?>
-                        <div>
-                            <?= $brand->title ?>
-                        </div>
+                        <div id="tree"></div>
                     <?php } ?>
                 </div>
                 <div class="col-lg-9 col-md-9">
-                    <?php Pjax::begin(); ?>
+                    <?php Pjax::begin([
+                        'id' => 'products-grid-pjax',
+                    ]); ?>
                     <?= GridView::widget([
+                        'id' => 'products-grid',
                         'rowOptions' => function (Product $product) use ($order){
                             $rowOptions = [
                                 'data-price' => $product->price_dealer,
@@ -45,12 +70,14 @@ $this->title = 'Магазин';
                             return $rowOptions;
                         },
                         'layout' => "{items}\n{pager}",
+                        'filterModel' => $filterModel,
                         'tableOptions' => [
                             'class' => 'table',
                         ],
                         'dataProvider' => $dataProvider,
                         'columns' => [
                             'title',
+                            'brand_id',
                             [
                                 'attribute' => 'price_dealer',
                                 'headerOptions' => [
@@ -60,6 +87,22 @@ $this->title = 'Магазин';
                                 'value' => function (Product $product){
                                     return BaseService::getFormattedPrice($product->price_dealer);
                                 },
+                            ],
+                            [
+                                'label' => 'В наличии',
+                                'attribute' => 'stock',
+                                'headerOptions' => [
+                                    'class' => 'text-center',
+                                ],
+                                'contentOptions' => ['class' => 'text-center'],
+                            ],
+                            [
+                                'label' => 'Под заказ',
+                                'attribute' => 'delivery',
+                                'headerOptions' => [
+                                    'class' => 'text-center',
+                                ],
+                                'contentOptions' => ['class' => 'text-center'],
                             ],
                             [
                                 'class' => Column::className(),

@@ -53,9 +53,7 @@ class SiteController extends Controller
 
     public function actionOrder()
     {
-        $order = new Order([
-//            'user_id' => Yii::$app->getUser()->getId(),
-        ]);
+        $order = new Order();
         $order->saveOrError();
 
         $orderItem = new OrderItem([

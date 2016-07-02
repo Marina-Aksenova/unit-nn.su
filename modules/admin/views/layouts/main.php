@@ -45,27 +45,13 @@ AdminAsset::register($this);
     <?php echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Главная', 'url' => ['/admin'], 'encode' => false],
+            ['label' => 'Страницы', 'url' => ['/admin']],
+            ['label' => 'Загрузка прайса', 'url' => ['/admin/download-price']],
             ['label' => '<span title="Выход" class="glyphicon glyphicon-log-out"></span>', 'url' => ['/site/logout'], 'encode' => false],
         ],
     ]);
     NavBar::end();
     ?>
-
-    <div class="container margin-top-60">
-
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <a href="/admin/index/update/1" class="btn btn-default">Главная</a>
-                <a href="/admin/index/update/2" class="btn btn-default">О компании</a>
-                <a href="/admin/index/update/3" class="btn btn-default">Акции</a>
-                <a href="/admin/index/update/5" class="btn btn-default">Контакты</a>
-                <a href="/admin/index/update/6" class="btn btn-default">Доставка</a>
-<!--                <a href="/admin/index/update/8" class="btn btn-default">Распродажа</a>-->
-            </div>
-        </div>
-
-    </div>
     
     <div class="wrap-page">
         <?= $content ?>

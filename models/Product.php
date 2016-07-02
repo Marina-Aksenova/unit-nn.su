@@ -5,6 +5,7 @@ namespace app\models;
 use app\components\BaseActiveRecord;
 use app\components\services\BaseService;
 use yii;
+use yii\data\ActiveDataProvider;
 
 /**
  * This is the model class for table "page".
