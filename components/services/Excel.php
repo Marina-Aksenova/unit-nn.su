@@ -44,7 +44,9 @@ class Excel extends yii\base\Component
                 $delivery = $worksheet->getCell('J' . $i)->getValue();
 
                 // Обработка группы товаров
-                if ($productGroupTitle = trim($worksheet->getCell('C' . $i)->getValue())) {
+                $productGroupTitle = trim($worksheet->getCell('C' . $i)->getValue());
+                preg_match('/\w\s*-\s*(.*)/', $productGroupTitle, $matches);
+                if ($productGroupTitle = yii\helpers\ArrayHelper::getValue($matches, 1)) {
                     if (!$productGroup = ProductGroup::findOne(['title' => $productGroupTitle])) {
                         $productGroup = new ProductGroup([
                             'title' => $productGroupTitle,
@@ -52,7 +54,7 @@ class Excel extends yii\base\Component
                         $productGroup->saveOrError();
                     }
                 }
-                
+
                 // Обработка поля с брэндом
                 if ($brandTitle = $worksheet->getCell('B' . $i)->getValue()) {
                     $brand = new ProductBrand([

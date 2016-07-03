@@ -40,10 +40,14 @@ $this->registerJs("
                     <div id="tree"></div>
                 </div>
                 <div class="col-lg-9 col-md-9">
-                    <div class="shop-search">
-                        <div class="form-group">
-                            <label for="shop-search-input">Поиск по названиею товара</label>
-                            <input type="text" id="shop-search-input" class="form-control shop-search-input" placeholder="Поиск по названиею товара">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="shop-search">
+                                <div class="form-group">
+                                    <label for="shop-search-input">Поиск по названию товара</label>
+                                    <input type="text" id="shop-search-input" class="form-control shop-search-input" placeholder="Начните набирать название товара">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <?php Pjax::begin([

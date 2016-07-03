@@ -18,6 +18,10 @@ define([
 
             });
          },
+        clear: function () {
+            var self = this;
+            self.input.val('');
+        },
         search: function () {
             var self = this;
 
@@ -28,6 +32,14 @@ define([
             $('[name="ProductFilter[stock]"]').val('');
             $('[name="ProductFilter[delivery]"]').val('');
             $("#products-grid").yiiGridView("applyFilter");
+
+            var tree = $('#tree');
+
+            // Убрать выделение у выбранного пункта
+            var selectedNodes = tree.treeview('getSelected');
+            _.each(selectedNodes, function (selectedNode) {
+                tree.treeview('unselectNode', [selectedNode.nodeId, {silent: true}]);
+            });
         }
     });
 });
