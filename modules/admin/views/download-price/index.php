@@ -1,4 +1,7 @@
 <?php
+use app\models\Product;
+use app\models\ProductBrand;
+use app\models\ProductGroup;
 use app\modules\admin\models\UploadForm;
 use yii\helpers\Html;
 use yii\web\View;
@@ -14,6 +17,7 @@ use yii\widgets\ActiveForm;
             <?php if (Yii::$app->getSession()->hasFlash('success')) { ?>
                 <div class="alert alert-success text-center">
                     <strong><?= Yii::$app->getSession()->getFlash('success') ?></strong>
+                    <div>брендов <?= ProductBrand::find()->count() ?>, групп товаров <?= ProductGroup::find()->count() ?>, товаров <?= Product::find()->count() ?></div>
                 </div>
             <?php } ?>
 

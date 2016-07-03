@@ -4,8 +4,9 @@ namespace app\controllers;
 
 use app\components\services\Excel;
 use app\models\ProductFilter;
+use app\models\ProductGroup;
 use yii;
-use app\models\Brand;
+use app\models\ProductBrand;
 use app\models\Page;
 use app\models\Product;
 use yii\data\ActiveDataProvider;
@@ -39,13 +40,12 @@ class PageController extends Controller
         $order = Yii::$app->getSession()->get('order');
         $filterModel = new ProductFilter();
 
-        $dataProvider = $filterModel->search(Yii::$app->request->get());
-        // ['ProductFilter' => ['brand_id' => 16]]
+        $dataProvider = $filterModel->search(Yii::$app->request->post());
 
         return $this->render('shop', [
             'dataProvider' => $dataProvider,
             'filterModel' => $filterModel,
-            'brands' => Brand::find()->all(),
+            'productGroups' => ProductGroup::find()->all(),
             'order' => $order,
         ]);
     }

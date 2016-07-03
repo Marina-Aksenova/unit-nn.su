@@ -27,7 +27,7 @@ class m160610_042126_init extends Migration
             ],
             [
                 'up' => function() {
-                    $this->createTable('brand', [
+                    $this->createTable('product_brand', [
                         'id' => $this->primaryKey()->unsigned()->comment('Идентификатор записи'),
                         'title' => $this->string(255)->comment('Название брэнда'),
                         'date_created' => Schema::TYPE_TIMESTAMP . ' DEFAULT CURRENT_TIMESTAMP COMMENT "Дата добавления записи"',
@@ -36,30 +36,7 @@ class m160610_042126_init extends Migration
                     ]);
                 },
                 'down' => function() {
-                    $this->dropTable('brand');
-                },
-                'transactional' => false,
-            ],
-            [
-                'up' => function() {
-                    $this->createTable('product', [
-                        'id' => $this->primaryKey()->unsigned()->comment('Идентификатор записи'),
-                        'title' => $this->string(255)->comment('Название'),
-                        'article' => $this->string(50)->comment('Артикул'),
-                        'brand_id' => $this->integer()->unsigned()->comment('Брэнд'),
-                        'catalog_number' => $this->string(50)->comment('Каталожный номер'),
-                        'price_dealer' => $this->decimal(20, 2)->comment('Дилерская цена'),
-                        'delivery' => $this->integer(11)->comment('Доставка'),
-                        'stock' => $this->integer(11)->comment('Наличие'),
-                        'description' => $this->text()->comment('Описание'),
-                        'date_created' => Schema::TYPE_TIMESTAMP . ' DEFAULT CURRENT_TIMESTAMP COMMENT "Дата добавления записи"',
-                        'date_updated' => Schema::TYPE_TIMESTAMP . ' DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Дата изменения записи"',
-                        'date_deleted' => Schema::TYPE_TIMESTAMP . ' COMMENT "Дата удаления записи"',
-                        'FOREIGN KEY product_2_brand (brand_id) REFERENCES brand (id) ON DELETE CASCADE ON UPDATE CASCADE',
-                    ]);
-                },
-                'down' => function() {
-                    $this->dropTable('product');
+                    $this->dropTable('product_brand');
                 },
                 'transactional' => false,
             ],
@@ -83,6 +60,23 @@ class m160610_042126_init extends Migration
                 },
                 'down' => function() {
                     $this->dropTable('user');
+                },
+                'transactional' => false,
+            ],
+            [
+                'up' => function() {
+                    $this->createTable('product_group', [
+                        'id' => $this->primaryKey()->unsigned()->comment('Идентификатор записи'),
+                        'title' => $this->string(255)->comment('Идентификатор заказа'),
+                        'user_id' => $this->integer()->unsigned()->comment('Идентификатор пользователя'),
+                        'date_created' => Schema::TYPE_TIMESTAMP . ' DEFAULT CURRENT_TIMESTAMP COMMENT "Дата добавления записи"',
+                        'date_updated' => Schema::TYPE_TIMESTAMP . ' DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Дата изменения записи"',
+                        'date_deleted' => Schema::TYPE_TIMESTAMP . ' COMMENT "Дата удаления записи"',
+                        'FOREIGN KEY product_group_2_user (user_id) REFERENCES `user` (id) ON DELETE CASCADE ON UPDATE CASCADE',
+                    ]);
+                },
+                'down' => function() {
+                    $this->dropTable('product_group');
                 },
                 'transactional' => false,
             ],
@@ -118,6 +112,31 @@ class m160610_042126_init extends Migration
                 },
                 'down' => function() {
                     $this->dropTable('order_item');
+                },
+                'transactional' => false,
+            ],
+            [
+                'up' => function() {
+                    $this->createTable('product', [
+                        'id' => $this->primaryKey()->unsigned()->comment('Идентификатор записи'),
+                        'title' => $this->string(255)->comment('Название'),
+                        'article' => $this->string(50)->comment('Артикул'),
+                        'brand_id' => $this->integer()->unsigned()->notNull()->comment('Брэнд'),
+                        'group_id' => $this->integer()->unsigned()->notNull()->comment('Брэнд'),
+                        'catalog_number' => $this->string(50)->comment('Каталожный номер'),
+                        'price_dealer' => $this->decimal(20, 2)->comment('Дилерская цена'),
+                        'delivery' => $this->integer(11)->comment('Доставка'),
+                        'stock' => $this->integer(11)->comment('Наличие'),
+                        'description' => $this->text()->comment('Описание'),
+                        'date_created' => Schema::TYPE_TIMESTAMP . ' DEFAULT CURRENT_TIMESTAMP COMMENT "Дата добавления записи"',
+                        'date_updated' => Schema::TYPE_TIMESTAMP . ' DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Дата изменения записи"',
+                        'date_deleted' => Schema::TYPE_TIMESTAMP . ' COMMENT "Дата удаления записи"',
+                        'FOREIGN KEY product_2_brand (brand_id) REFERENCES product_brand (id) ON DELETE CASCADE ON UPDATE CASCADE',
+                        'FOREIGN KEY product_2_product_group (group_id) REFERENCES product_group (id) ON DELETE CASCADE ON UPDATE CASCADE',
+                    ]);
+                },
+                'down' => function() {
+                    $this->dropTable('product');
                 },
                 'transactional' => false,
             ],

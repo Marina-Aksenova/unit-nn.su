@@ -15,14 +15,14 @@ use yii;
 
  * @property Product[] $products
  */
-class Brand extends BaseActiveRecord
+class ProductBrand extends BaseActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'brand';
+        return 'product_brand';
     }
 
     /**
@@ -32,6 +32,7 @@ class Brand extends BaseActiveRecord
     {
         return [
             [['title'], 'required'],
+            [['title'], 'trim'],
             [['title'], 'string', 'max' => 255],
         ];
     }

@@ -289,3 +289,7 @@ body .navbar-nav li.cart a {
 .component-amount {
     min-width: 105px;
 }
+
+#products-grid-filters {
+    display: none;
+}

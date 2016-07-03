@@ -17,11 +17,12 @@ use yii\data\ActiveDataProvider;
  * @property string $price_dealer
  * @property string $delivery
  * @property integer $brand_id
+ * @property integer $group_id
  * @property string $stock
  * @property string $date_create
  * @property string $date_change
  * 
- * @property Brand $brand
+ * @property ProductBrand $brand
  */
 class Product extends BaseActiveRecord
 {
@@ -40,10 +41,13 @@ class Product extends BaseActiveRecord
     {
         return [
             [['title'], 'required'],
+            [['title'], 'trim'],
             [['title'], 'string', 'max' => 155],
 
+            [['article'], 'trim'],
             [['article'], 'string', 'max' => 50],
 
+            [['catalog_number'], 'trim'],
             [['catalog_number'], 'string', 'max' => 50],
 
             [['price_dealer'], 'double'],
@@ -52,9 +56,14 @@ class Product extends BaseActiveRecord
 
             [['stock'], 'integer', 'min' => 0],
 
+            [['description'], 'trim'],
             [['description'], 'string'],
 
-            [['brand_id'], 'exist', 'targetClass' => Brand::className(), 'targetAttribute' => 'id'],
+            [['brand_id'], 'required'],
+            [['brand_id'], 'exist', 'targetClass' => ProductBrand::className(), 'targetAttribute' => 'id'],
+
+            [['group_id'], 'required'],
+            [['group_id'], 'exist', 'targetClass' => ProductGroup::className(), 'targetAttribute' => 'id'],
         ];
     }
 
@@ -71,6 +80,6 @@ class Product extends BaseActiveRecord
 
     public function getBrand()
     {
-        return $this->hasOne(Brand::className(), ['id' => 'brand_id']);
+        return $this->hasOne(ProductBrand::className(), ['id' => 'brand_id']);
     }
 }

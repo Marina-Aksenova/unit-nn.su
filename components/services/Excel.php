@@ -1,8 +1,9 @@
 <?php
 namespace app\components\services;
 
-use app\models\Brand;
+use app\models\ProductBrand;
 use app\models\Product;
+use app\models\ProductGroup;
 use yii;
 use yii\base\UserException;
 
@@ -29,20 +30,32 @@ class Excel extends yii\base\Component
             }
 
             Product::deleteAll();
-            Brand::deleteAll();
+            ProductGroup::deleteAll();
+            ProductBrand::deleteAll();
 
             // Обработка строк.
             $brand = null;
-    		for (; $i <= $worksheet->getHighestRow(); $i++) {
+            $productGroup = null;
+            for (; $i <= $worksheet->getHighestRow(); $i++) {
                 $priceDealer = $worksheet->getCell('H' . $i)->getValue();
                 $article = $worksheet->getCell('F' . $i)->getValue();
                 $title = $worksheet->getCell('D' . $i)->getValue();
                 $stock = $worksheet->getCell('I' . $i)->getValue();
                 $delivery = $worksheet->getCell('J' . $i)->getValue();
 
+                // Обработка группы товаров
+                if ($productGroupTitle = trim($worksheet->getCell('C' . $i)->getValue())) {
+                    if (!$productGroup = ProductGroup::findOne(['title' => $productGroupTitle])) {
+                        $productGroup = new ProductGroup([
+                            'title' => $productGroupTitle,
+                        ]);
+                        $productGroup->saveOrError();
+                    }
+                }
+                
                 // Обработка поля с брэндом
                 if ($brandTitle = $worksheet->getCell('B' . $i)->getValue()) {
-                    $brand = new Brand([
+                    $brand = new ProductBrand([
                         'title' => $brandTitle,
                     ]);
                     $brand->saveOrError();
@@ -56,6 +69,7 @@ class Excel extends yii\base\Component
                         'delivery' => $delivery,
                         'stock' => $stock,
                         'brand_id' => $brand->id,
+                        'group_id' => $productGroup->id,
                     ]);
                     $product->saveOrError();
                 }

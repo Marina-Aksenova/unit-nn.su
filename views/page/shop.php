@@ -1,7 +1,9 @@
 <?php
+use app\assets\AppAsset;
 use app\components\services\BaseService;
-use app\models\Brand;
+use app\models\ProductBrand;
 use app\models\Product;
+use app\models\ProductGroup;
 use yii\data\ActiveDataProvider;
 use yii\grid\Column;
 use yii\grid\GridView;
@@ -13,34 +15,21 @@ use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider ActiveDataProvider */
-/* @var $brands array */
+/* @var $productGroups array */
 /* @var $order array */
 /* @var $product Product */
+/* @var $productGroup ProductGroup */
 /* @var $filterModel Product */
 
 $this->title = 'Магазин';
 
 $this->registerJsFile('/js/shop/pages/shop.js', ['position' => View::POS_END]);
+$this->registerJsFile('/js/shop/components/shopGrid.js', ['position' => View::POS_END]);
 $this->registerCssFile('/js/static/treeview/src/css/bootstrap-treeview.css', ['position' => View::POS_BEGIN]);
 
-$tree = [];
-/** @var Brand $brand */
-foreach ($brands as $brand) {
-    $tree[] = [
-        'text' => $brand->title,
-        'brandId' => $brand->id,
-        'nodes' => $brand->getProductsForTree(),
-        'state' => [
-            'expanded' => false,
-        ],
-    ];
-}
-
 $this->registerJs("
-        var treeData = " . Json::encode($tree) . ";
-",
-View::POS_BEGIN
-);
+    var treeData = " . Json::encode(ProductGroup::getTree()) . ";
+", View::POS_END);
 ?>
 
 <div class="shop-container">
@@ -48,13 +37,18 @@ View::POS_BEGIN
         <div class="panel-body">
             <div class="row">
                 <div class="col-lg-3 col-md-3">
-                    <?php foreach ($brands as $brand) { ?>
-                        <div id="tree"></div>
-                    <?php } ?>
+                    <div id="tree"></div>
                 </div>
                 <div class="col-lg-9 col-md-9">
+                    <div class="shop-search">
+                        <div class="form-group">
+                            <label for="shop-search-input">Поиск по названиею товара</label>
+                            <input type="text" id="shop-search-input" class="form-control shop-search-input" placeholder="Поиск по названиею товара">
+                        </div>
+                    </div>
                     <?php Pjax::begin([
                         'id' => 'products-grid-pjax',
+                        'clientOptions' => ['method' => 'POST'],
                     ]); ?>
                     <?= GridView::widget([
                         'id' => 'products-grid',
@@ -77,7 +71,20 @@ View::POS_BEGIN
                         'dataProvider' => $dataProvider,
                         'columns' => [
                             'title',
-                            'brand_id',
+                            [
+                                'attribute' => 'group_id',
+                                'headerOptions' => [
+                                    'class' => 'hidden',
+                                ],
+                                'contentOptions' => ['class' => 'hidden'],
+                            ],
+                            [
+                                'attribute' => 'brand_id',
+                                'headerOptions' => [
+                                    'class' => 'hidden',
+                                ],
+                                'contentOptions' => ['class' => 'hidden'],
+                            ],
                             [
                                 'attribute' => 'price_dealer',
                                 'headerOptions' => [
@@ -127,10 +134,10 @@ View::POS_BEGIN
 
                     <?php $this->registerJs("
                         requirejs([
-                            'shop'
-                        ], function (Shop) {
-                            var shop = new Shop();
-                            shop.render();
+                            'shopGrid'
+                        ], function (ShopGrid) {
+                            var shopGrid = new ShopGrid();
+                            shopGrid.render();
                         });
                     "); ?>
 
