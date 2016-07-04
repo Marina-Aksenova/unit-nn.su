@@ -34,6 +34,12 @@ $this->registerJs("
 
             <?php $form = ActiveForm::begin([
                 'options' => ['enctype' => 'multipart/form-data'],
+                'fieldConfig' => [
+                    'errorOptions' => [
+                        'encode' => false,
+                        'class' => 'help-block',
+                    ],
+                ],
             ])
             ?>
             <?= $form->field($model, 'file')->fileInput()->hint('Выберите файл для загрузки в формате Microsoft Excel (*.xls, *.xlsx)') ?>
