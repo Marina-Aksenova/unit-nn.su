@@ -5,7 +5,6 @@
 /* @var $message string */
 /* @var $exception Exception */
 
-use yii;
 use yii\helpers\Html;
 
 $this->title = 'Ошибка!';
@@ -16,8 +15,8 @@ $error = nl2br(Html::encode($message));
         Yii::$app->mailer->compose()
             ->setFrom('support@unit-nn.ru')
             ->setTo(Yii::$app->params['adminEmail'])
-            ->setSubject('Ошибка unit-nn')
-            ->setHtmlBody($error)
+            ->setSubject($error)
+            ->setHtmlBody($exception->getTraceAsString())
             ->send();
     ?>
 
