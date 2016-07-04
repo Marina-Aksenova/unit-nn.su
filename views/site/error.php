@@ -5,23 +5,30 @@
 /* @var $message string */
 /* @var $exception Exception */
 
+use yii;
 use yii\helpers\Html;
 
-$this->title = $name;
+$this->title = 'Ошибка!';
+$error = nl2br(Html::encode($message));
 ?>
 <div class="site-error">
+    <?php
+        Yii::$app->mailer->compose()
+            ->setFrom('support@unit-nn.ru')
+            ->setTo(Yii::$app->params['adminEmail'])
+            ->setSubject('Ошибка unit-nn')
+            ->setHtmlBody($error)
+            ->send();
+    ?>
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <div class="alert alert-danger">
-        <?= nl2br(Html::encode($message)) ?>
+        <?= $error ?>
     </div>
 
     <p>
-        The above error occurred while the Web server was processing your request.
-    </p>
-    <p>
-        Please contact us if you think this is a server error. Thank you.
+        Ошибка во время обработки запроса. Мы уже занимаемся решением этой проблемы.
     </p>
 
 </div>

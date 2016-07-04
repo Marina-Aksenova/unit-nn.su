@@ -50,6 +50,9 @@ $this->registerJs("
                             </div>
                         </div>
                     </div>
+                    <div id="loading" class="center-block">
+                        <img src="/images/loading.gif">
+                    </div>
                     <?php Pjax::begin([
                         'id' => 'products-grid-pjax',
                         'clientOptions' => ['method' => 'POST'],

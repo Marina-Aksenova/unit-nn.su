@@ -23,4 +23,17 @@ requirejs([
             }
         }
     });
+
+    $(document).on('pjax:send', function() {
+        $('#loading').show();
+
+        // Убрать выделение у выбранного пункта
+        var selectedNodes = tree.treeview('getSelected');
+        _.each(selectedNodes, function (selectedNode) {
+            tree.treeview('unselectNode', [selectedNode.nodeId, {silent: true}]);
+        });
+    });
+    $(document).on('pjax:complete', function() {
+        $('#loading').hide()
+    });
 });

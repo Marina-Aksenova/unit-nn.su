@@ -293,3 +293,9 @@ body .navbar-nav li.cart a {
 #products-grid-filters {
     display: none;
 }
+
+#loading {
+    width: 120px;
+    height: 120px;
+    display: none;
+}

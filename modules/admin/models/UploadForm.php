@@ -24,7 +24,10 @@ class UploadForm extends Model
         if ($this->validate()) {
             $filePath = 'uploads/' . uniqid() . '_' . $this->file->baseName . '.' . $this->file->extension;
             $this->file->saveAs($filePath);
-            Excel::importPrice($filePath);
+            if ($errors = Excel::importPrice($filePath)) {
+                $this->addError('file', implode('<br>', $errors));
+                return false;
+            }
 
             return true;
         } else {

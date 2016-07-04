@@ -1,8 +1,8 @@
 <?php
 namespace app\components\services;
 
-use app\models\ProductBrand;
 use app\models\Product;
+use app\models\ProductBrand;
 use app\models\ProductGroup;
 use yii;
 use yii\base\UserException;
@@ -26,7 +26,7 @@ class Excel extends yii\base\Component
 
             // Проверка есть в файле строки для обработки.
             if ($worksheet->getHighestRow() < 2) {
-                throw new UserException('ERR_FILE_IS_EMPTY');
+                throw new UserException('В файле нет строк для обработки');
             }
 
             Product::deleteAll();
@@ -36,54 +36,63 @@ class Excel extends yii\base\Component
             // Обработка строк.
             $brand = null;
             $productGroup = null;
+            $errors = [];
             for (; $i <= $worksheet->getHighestRow(); $i++) {
-                $priceDealer = $worksheet->getCell('H' . $i)->getValue();
-                $article = $worksheet->getCell('F' . $i)->getValue();
-                $title = $worksheet->getCell('D' . $i)->getValue();
-                $stock = $worksheet->getCell('I' . $i)->getValue();
-                $delivery = $worksheet->getCell('J' . $i)->getValue();
+                try {
+                    $priceDealer = $worksheet->getCell('H' . $i)->getValue();
+                    $article = $worksheet->getCell('F' . $i)->getValue();
+                    $title = $worksheet->getCell('D' . $i)->getValue();
+                    $stock = $worksheet->getCell('I' . $i)->getValue();
+                    $delivery = $worksheet->getCell('J' . $i)->getValue();
 
-                // Обработка группы товаров
-                $productGroupTitle = trim($worksheet->getCell('C' . $i)->getValue());
-                preg_match('/\w\s*-\s*(.*)/', $productGroupTitle, $matches);
-                if ($productGroupTitle = yii\helpers\ArrayHelper::getValue($matches, 1)) {
-                    if (!$productGroup = ProductGroup::findOne(['title' => $productGroupTitle])) {
-                        $productGroup = new ProductGroup([
-                            'title' => $productGroupTitle,
-                        ]);
-                        $productGroup->saveOrError();
+                    // Обработка группы товаров
+                    $productGroupTitle = trim($worksheet->getCell('C' . $i)->getValue());
+                    preg_match('/\w\s*-\s*(.*)/', $productGroupTitle, $matches);
+                    if ($productGroupTitle = yii\helpers\ArrayHelper::getValue($matches, 1)) {
+                        if (!$productGroup = ProductGroup::findOne(['title' => $productGroupTitle])) {
+                            $productGroup = new ProductGroup([
+                                'title' => $productGroupTitle,
+                            ]);
+                            $productGroup->saveOrError();
+                        }
                     }
-                }
 
-                // Обработка поля с брэндом
-                if ($brandTitle = $worksheet->getCell('B' . $i)->getValue()) {
-                    $brand = new ProductBrand([
-                        'title' => $brandTitle,
-                    ]);
-                    $brand->saveOrError();
-                }
+                    // Обработка поля с брэндом
+                    if ($brandTitle = $worksheet->getCell('B' . $i)->getValue()) {
+                        $brand = new ProductBrand([
+                            'title' => $brandTitle,
+                        ]);
+                        $brand->saveOrError();
+                    }
 
-                if ($title) {
-                    $product = new Product([
-                        'title' => $title,
-                        'article' => $article,
-                        'price_dealer' => $priceDealer,
-                        'delivery' => $delivery,
-                        'stock' => $stock,
-                        'brand_id' => $brand->id,
-                        'group_id' => $productGroup->id,
-                    ]);
-                    $product->saveOrError();
+                    if ($title) {
+                        $product = new Product([
+                            'title' => $title,
+                            'article' => $article,
+                            'price_dealer' => $priceDealer,
+                            'delivery' => $delivery,
+                            'stock' => $stock,
+                            'brand_id' => $brand->id,
+                            'group_id' => $productGroup->id,
+                        ]);
+                        $product->saveOrError();
+                    }
+                } catch (\Exception $exception) {
+                    $errors[] = 'В строке ' . $i . ' ошибка: ' . $exception->getMessage();
                 }
             }
 
-            $transaction->commit();
+            if (!$errors) {
+                $transaction->commit();
+            } else {
+                $transaction->rollBack();
+            }
         } catch (\Exception $exception) {
             // Если было вызвано исключение во время проведения транзакции, то отменяю изменения в базе данных.
             $transaction->rollBack();
             throw $exception;
         }
 
-        return true;
+        return $errors;
     }
 }

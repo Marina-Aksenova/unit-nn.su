@@ -50,10 +50,13 @@ class Product extends BaseActiveRecord
             [['catalog_number'], 'trim'],
             [['catalog_number'], 'string', 'max' => 50],
 
+            [['price_dealer'], 'required'],
             [['price_dealer'], 'double'],
 
+            [['delivery'], 'default', 'value' => 0],
             [['delivery'], 'integer', 'min' => 1],
 
+            [['stock'], 'default', 'value' => 0],
             [['stock'], 'integer', 'min' => 0],
 
             [['description'], 'trim'],
