@@ -27,9 +27,9 @@ requirejs([
     });
 
     $(document).on('pjax:send', function() {
-        $('#loading').show();
+        $('#loading').fadeIn(1000);
     });
     $(document).on('pjax:complete', function() {
-        $('#loading').hide()
+        $('#loading').fadeOut(500)
     });
 });
