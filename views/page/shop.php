@@ -1,7 +1,6 @@
 <?php
 use app\assets\AppAsset;
 use app\components\services\BaseService;
-use app\models\ProductBrand;
 use app\models\Product;
 use app\models\ProductGroup;
 use yii\data\ActiveDataProvider;
@@ -47,10 +46,14 @@ $this->registerJs("
                                     <label for="shop-search-title">Поиск по названию товара</label>
                                     <input type="text" id="shop-search-title" class="form-control" placeholder="Начните набирать название товара">
                                 </div>
-                                <div class="form-group">
-                                    <label for="shop-search-stock">Поиск по названию товара</label>
-                                    <input type="text" id="shop-search-stock" class="form-control">
-                                </div>
+                                <span class="button-checkbox">
+                                    <button id="shop-search-stock" type="button" class="btn" data-color="default">В наличии</button>
+                                    <input type="checkbox" id="shop-search-stock-input" class="hidden"/>
+                                </span>
+                                <span class="button-checkbox">
+                                    <button id="shop-search-delivery" type="button" class="btn" data-color="default">Под заказ</button>
+                                    <input type="checkbox" id="shop-search-delivery-input" class="hidden"/>
+                                </span>
                             </div>
                         </div>
                     </div>

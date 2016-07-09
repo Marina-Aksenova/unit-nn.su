@@ -49,8 +49,8 @@ class ProductFilter extends Product
         $query->andFilterWhere(['price_dealer' => $this->price_dealer]);
         $query->andFilterWhere(['brand_id' => $this->brand_id]);
         $query->andFilterWhere(['group_id' => $this->group_id]);
-        $query->andFilterWhere(['delivery' => $this->delivery]);
-        $query->andFilterWhere(['stock' => $this->stock]);
+        $query->andFilterWhere(['>=', 'delivery', $this->delivery]);
+        $query->andFilterWhere(['>=', 'stock', $this->stock]);
 
         return $dataProvider;
     }
