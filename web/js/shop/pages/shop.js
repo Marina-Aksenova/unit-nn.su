@@ -21,6 +21,7 @@ requirejs([
                 $('#products-grid').yiiGridView('applyFilter');
             } else {
                 tree.treeview('unselectNode', [node.nodeId, {silent: true}]);
+                tree.treeview('toggleNodeExpanded', [node.nodeId, {silent: true}]);
             }
         }
     });
