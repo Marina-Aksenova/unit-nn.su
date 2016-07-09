@@ -8,7 +8,7 @@ define([
 
             self.inputTimer = null;
             self.container = $('.shop-search');
-            self.input = $('#shop-search-input');
+            self.input = $('#shop-search-title');
 
             self.input.keyup(function () {
                 clearTimeout(self.inputTimer);
@@ -26,8 +26,6 @@ define([
             var self = this;
 
             $('[name="ProductFilter[title]"]').val(self.input.val());
-            $('[name="ProductFilter[group_id]"]').val('');
-            $('[name="ProductFilter[brand_id]"]').val('');
             $('[name="ProductFilter[price_dealer]"]').val('');
             $('[name="ProductFilter[stock]"]').val('');
             $('[name="ProductFilter[delivery]"]').val('');

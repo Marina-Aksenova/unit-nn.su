@@ -23,8 +23,8 @@ use yii\widgets\Pjax;
 
 $this->title = 'Магазин';
 
-$this->registerJsFile('/js/shop/pages/shop.js', ['position' => View::POS_END]);
-$this->registerJsFile('/js/shop/components/shopGrid.js', ['position' => View::POS_END]);
+$this->registerJsFile('/js/shop/pages/shop.js', ['depends' => AppAsset::className()]);
+$this->registerJsFile('/js/shop/components/shopGrid.js', ['depends' => AppAsset::className()]);
 $this->registerCssFile('/js/static/treeview/src/css/bootstrap-treeview.css', ['position' => View::POS_BEGIN]);
 
 $this->registerJs("
@@ -44,8 +44,12 @@ $this->registerJs("
                         <div class="panel-body">
                             <div class="shop-search">
                                 <div class="form-group">
-                                    <label for="shop-search-input">Поиск по названию товара</label>
-                                    <input type="text" id="shop-search-input" class="form-control shop-search-input" placeholder="Начните набирать название товара">
+                                    <label for="shop-search-title">Поиск по названию товара</label>
+                                    <input type="text" id="shop-search-title" class="form-control" placeholder="Начните набирать название товара">
+                                </div>
+                                <div class="form-group">
+                                    <label for="shop-search-stock">Поиск по названию товара</label>
+                                    <input type="text" id="shop-search-stock" class="form-control">
                                 </div>
                             </div>
                         </div>
