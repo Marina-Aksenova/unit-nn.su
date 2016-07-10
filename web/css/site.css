@@ -248,6 +248,11 @@ a, a:focus, a:hover {
     margin-top: -25px;
 }
 
+.ruble2 {
+    height: 18px;
+    margin-top: -11px;
+}
+
 .component-amount input {
     width: 50px;
     margin: 0 3px;
@@ -298,4 +303,8 @@ body .navbar-nav li.cart a {
     width: 120px;
     height: 120px;
     display: none;
+}
+
+td .panel {
+    margin-bottom: 0;
 }

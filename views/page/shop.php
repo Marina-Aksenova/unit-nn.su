@@ -44,7 +44,8 @@ $this->registerJs("
                             <div class="shop-search">
                                 <div class="form-group">
                                     <label for="shop-search-title">Поиск по названию товара</label>
-                                    <input type="text" id="shop-search-title" class="form-control" placeholder="Начните набирать название товара">
+                                    <input type="text" id="shop-search-title" class="form-control"
+                                           placeholder="Начните набирать название товара">
                                 </div>
                                 <span class="button-checkbox">
                                     <button id="shop-search-stock" type="button" class="btn" data-color="default">В наличии</button>
@@ -84,7 +85,6 @@ $this->registerJs("
                         ],
                         'dataProvider' => $dataProvider,
                         'columns' => [
-                            'title',
                             [
                                 'attribute' => 'group_id',
                                 'headerOptions' => [
@@ -100,11 +100,48 @@ $this->registerJs("
                                 'contentOptions' => ['class' => 'hidden'],
                             ],
                             [
+                                'attribute' => 'title',
+                                'content' => function (Product $product) use ($order) {
+                                    $amount = ArrayHelper::getValue($order, $product->id, 0);
+                                    $spanMinus = Html::tag('span', '', ['class' => 'glyphicon glyphicon-minus']);
+                                    $buttonMinus = Html::tag('button', $spanMinus, ['class' => 'btn btn-default btn-xs button-minus']);
+                                    $spanPlus = Html::tag('span', '', ['class' => 'glyphicon glyphicon-plus']);
+                                    $buttonPlus = Html::tag('button', $spanPlus, ['class' => 'btn btn-default btn-xs button-plus']);
+                                    $input = Html::input('text', 'amount', $amount, ['class' => 'form-control input-sm input-amount']);
+                                    $amount = Html::tag('div', $buttonMinus . $input . $buttonPlus, ['class' => 'component-amount']);
+
+                                    return '
+                                        <div class="hidden-xs">
+                                            ' . $product->title . '
+                                        </div>
+                                        <div class="panel panel-default hidden-lg hidden-md hidden-sm">
+                                            <div class="panel-heading" role="tab" id="product-heading-' . $product->id . '">
+                                                <h4 class="panel-title">
+                                                    <a role="button" data-toggle="collapse" href="#product-collapse-' . $product->id . '" aria-expanded="true" aria-controls="product-collapse-' . $product->id . '">
+                                                        ' . $product->title . '
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="product-collapse-' . $product->id . '" class="panel-collapse collapse" role="tabpanel" aria-labelledby="product-heading-' . $product->id . '">
+                                                <div class="panel-body">
+                                                    <div class="pull-right">' . $amount . '</div>
+                                                    <div>В наличии: ' . $product->stock . '</div>
+                                                    <div>Под заказ: ' . $product->delivery . '</div>
+                                                    <div class="text-center">
+                                                        <strong style="font-size: 24px;">' . BaseService::getFormattedPrice($product->price_dealer) . '</strong>
+                                                        <img src="/images/ruble.png" class="ruble2">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>';
+                                },
+                            ],
+                            [
                                 'attribute' => 'price_dealer',
                                 'headerOptions' => [
-                                    'class' => 'text-center',
+                                    'class' => 'text-center hidden-xs',
                                 ],
-                                'contentOptions' => ['class' => 'text-center'],
+                                'contentOptions' => ['class' => 'text-center hidden-xs'],
                                 'value' => function (Product $product){
                                     return BaseService::getFormattedPrice($product->price_dealer);
                                 },
@@ -113,25 +150,25 @@ $this->registerJs("
                                 'label' => 'В наличии',
                                 'attribute' => 'stock',
                                 'headerOptions' => [
-                                    'class' => 'text-center',
+                                    'class' => 'text-center hidden-xs',
                                 ],
-                                'contentOptions' => ['class' => 'text-center'],
+                                'contentOptions' => ['class' => 'text-center hidden-xs'],
                             ],
                             [
                                 'label' => 'Под заказ',
                                 'attribute' => 'delivery',
                                 'headerOptions' => [
-                                    'class' => 'text-center',
+                                    'class' => 'text-center hidden-xs',
                                 ],
-                                'contentOptions' => ['class' => 'text-center'],
+                                'contentOptions' => ['class' => 'text-center hidden-xs'],
                             ],
                             [
                                 'class' => Column::className(),
                                 'header' => 'Количество',
                                 'headerOptions' => [
-                                    'class' => 'text-center',
+                                    'class' => 'text-center hidden-xs',
                                 ],
-                                'contentOptions' => ['class' => 'text-center'],
+                                'contentOptions' => ['class' => 'text-center hidden-xs'],
                                 'content' => function (Product $product) use ($order){
                                     $amount = ArrayHelper::getValue($order, $product->id, 0);
                                     $spanMinus = Html::tag('span', '', ['class' => 'glyphicon glyphicon-minus']);

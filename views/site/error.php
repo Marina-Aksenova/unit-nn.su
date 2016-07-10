@@ -15,7 +15,7 @@ if ($previousExcweption = $exception->getPrevious()) {
 }
 $this->title = 'Ошибка!';
 $error = nl2br(Html::encode($message));
-$traces = $exception->getTraceAsString() . '<br<br>Предыдущее исключение:<br>' . $previousExceptionMessage;
+$traces = $exception->getTraceAsString() . '<br><br>Предыдущее исключение:<br>' . $previousExceptionMessage;
 ?>
 <div class="site-error">
     <?php
@@ -23,18 +23,16 @@ $traces = $exception->getTraceAsString() . '<br<br>Предыдущее искл
             ->setFrom('support@unit-nn.ru')
             ->setTo(Yii::$app->params['adminEmail'])
             ->setSubject($error . ' | ' . $previousExceptionError)
-            ->setHtmlBody($traces)
+            ->setHtmlBody(nl2br($traces))
             ->send();
     ?>
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <div class="alert alert-danger">
         <?= $error ?>
     </div>
 
     <p>
-        Ошибка во время обработки запроса. Мы уже занимаемся решением этой проблемы.
+        Произошла ошибка во время обработки запроса. Мы уже занимаемся решением этой проблемы.
     </p>
 
 </div>
