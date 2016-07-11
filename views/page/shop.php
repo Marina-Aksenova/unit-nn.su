@@ -22,8 +22,6 @@ use yii\widgets\Pjax;
 
 $this->title = 'Магазин';
 
-var_dump(Yii::$app->security->generatePasswordHash('Yfifj,edm090')); die('-=END=-');
-
 $this->registerJsFile('/js/shop/pages/shop.js', ['depends' => AppAsset::className()]);
 $this->registerJsFile('/js/shop/components/shopGrid.js', ['depends' => AppAsset::className()]);
 $this->registerCssFile('/js/static/treeview/src/css/bootstrap-treeview.css', ['position' => View::POS_BEGIN]);
