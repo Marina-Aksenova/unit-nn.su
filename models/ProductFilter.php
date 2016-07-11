@@ -17,6 +17,7 @@ class ProductFilter extends Product
 
             [['catalog_number'], 'string', 'max' => 50],
 
+            [['price_dealer'], 'formatPrice'],
             [['price_dealer'], 'double'],
 
             [['delivery'], 'integer', 'min' => 1],
@@ -29,6 +30,11 @@ class ProductFilter extends Product
 
             [['group_id'], 'integer'],
         ];
+    }
+
+    public function formatPrice($attribute)
+    {
+        $this->$attribute = str_replace([' ', ','], ['', '.'], $this->$attribute);
     }
 
     public function search($params = [])

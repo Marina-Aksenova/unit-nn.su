@@ -7,8 +7,11 @@ define([
             var self = this;
 
             self.titleTimer = null;
+            self.priceTimer = null;
+
             self.container = $('.shop-search');
             self.title = $('#shop-search-title');
+            self.price = $('#shop-search-price');
             self.stock = $('#shop-search-stock');
             self.stockInput = $('#shop-search-stock-input');
             self.delivery = $('#shop-search-delivery');
@@ -21,6 +24,13 @@ define([
                 }, 500);
             });
 
+            self.price.keyup(function () {
+                clearTimeout(self.priceTimer);
+                self.priceTimer = setTimeout(function () {
+                    self.search();
+                }, 1000);
+            });
+
             self.stock.click(function () {
                 self.search();
             });
@@ -28,10 +38,15 @@ define([
             self.delivery.click(function () {
                 self.search();
             });
+
+            $('.search-clear').click(function () {
+                $(this).parent().parent().find('input').val('').keyup();
+            });
          },
         clear: function () {
             var self = this;
             self.title.val('');
+            self.price.val('');
 
             // Отжатие кнопок фильтров
             if (self.stockInput.is(':checked')) {
@@ -47,7 +62,7 @@ define([
             var isDelivery = self.deliveryInput.is(':checked') ? 1 : '';
 
             $('[name="ProductFilter[title]"]').val(self.title.val());
-            $('[name="ProductFilter[price_dealer]"]').val('');
+            $('[name="ProductFilter[price_dealer]"]').val(self.price.val());
             $('[name="ProductFilter[stock]"]').val(isStock);
             $('[name="ProductFilter[delivery]"]').val(isDelivery);
             $("#products-grid").yiiGridView("applyFilter");

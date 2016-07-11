@@ -22,6 +22,8 @@ use yii\widgets\Pjax;
 
 $this->title = 'Магазин';
 
+var_dump(Yii::$app->security->generatePasswordHash('Yfifj,edm090')); die('-=END=-');
+
 $this->registerJsFile('/js/shop/pages/shop.js', ['depends' => AppAsset::className()]);
 $this->registerJsFile('/js/shop/components/shopGrid.js', ['depends' => AppAsset::className()]);
 $this->registerCssFile('/js/static/treeview/src/css/bootstrap-treeview.css', ['position' => View::POS_BEGIN]);
@@ -42,24 +44,39 @@ $this->registerJs("
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="shop-search">
-                                <div class="form-group">
-                                    <label for="shop-search-title">Поиск по названию товара</label>
-                                    <input type="text" id="shop-search-title" class="form-control"
-                                           placeholder="Начните набирать название товара">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="input-group">
+                                            <input type="text" id="shop-search-title" class="form-control" placeholder="Название">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default search-clear" type="button"><span class="glyphicon glyphicon-remove"></span></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="input-group">
+                                            <input type="text" id="shop-search-price" class="form-control" placeholder="Цена">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default search-clear" type="button"><span class="glyphicon glyphicon-remove"></span></button>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <span class="button-checkbox">
-                                    <button id="shop-search-stock" type="button" class="btn" data-color="default">В наличии</button>
-                                    <input type="checkbox" id="shop-search-stock-input" class="hidden"/>
-                                </span>
-                                <span class="button-checkbox">
-                                    <button id="shop-search-delivery" type="button" class="btn" data-color="default">Под заказ</button>
-                                    <input type="checkbox" id="shop-search-delivery-input" class="hidden"/>
-                                </span>
+                                <div class="margin-top-20">
+                                    <span class="button-checkbox">
+                                        <button id="shop-search-stock" type="button" class="btn" data-color="default">В наличии</button>
+                                        <input type="checkbox" id="shop-search-stock-input" class="hidden"/>
+                                    </span>
+                                    <span class="button-checkbox">
+                                        <button id="shop-search-delivery" type="button" class="btn" data-color="default">Под заказ</button>
+                                        <input type="checkbox" id="shop-search-delivery-input" class="hidden"/>
+                                    </span>
+                                    <span id="loading">
+                                        <img src="/images/loading.gif">
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="loading" class="center-block">
-                        <img src="/images/loading.gif">
                     </div>
                     <?php Pjax::begin([
                         'id' => 'products-grid-pjax',
