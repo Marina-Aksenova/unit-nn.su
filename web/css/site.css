@@ -306,3 +306,7 @@ body .navbar-nav li.cart a {
 td .panel {
     margin-bottom: 0;
 }
+
+.search-input {
+    margin-bottom: 10px;
+}

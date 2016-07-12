@@ -43,7 +43,7 @@ $this->registerJs("
                         <div class="panel-body">
                             <div class="shop-search">
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 search-input">
                                         <div class="input-group">
                                             <input type="text" id="shop-search-title" class="form-control" placeholder="Название">
                                             <span class="input-group-btn">
@@ -51,8 +51,9 @@ $this->registerJs("
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 search-input">
                                         <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1"><img src="/images/ruble.png" height="17"></span>
                                             <input type="text" id="shop-search-price" class="form-control" placeholder="Цена">
                                             <span class="input-group-btn">
                                                 <button class="btn btn-default search-clear" type="button"><span class="glyphicon glyphicon-remove"></span></button>
@@ -60,18 +61,25 @@ $this->registerJs("
                                         </div>
                                     </div>
                                 </div>
-                                <div class="margin-top-20">
-                                    <span class="button-checkbox">
-                                        <button id="shop-search-stock" type="button" class="btn" data-color="default">В наличии</button>
-                                        <input type="checkbox" id="shop-search-stock-input" class="hidden"/>
-                                    </span>
-                                    <span class="button-checkbox">
-                                        <button id="shop-search-delivery" type="button" class="btn" data-color="default">Под заказ</button>
-                                        <input type="checkbox" id="shop-search-delivery-input" class="hidden"/>
-                                    </span>
-                                    <span id="loading">
-                                        <img src="/images/loading.gif">
-                                    </span>
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-6 col-sm-6 search-input">
+                                        <span class="button-checkbox">
+                                            <button id="shop-search-stock" type="button" class="btn" data-color="default">В наличии</button>
+                                            <input type="checkbox" id="shop-search-stock-input" class="hidden"/>
+                                        </span>
+                                        <span class="button-checkbox">
+                                            <button id="shop-search-delivery" type="button" class="btn" data-color="default">Под заказ</button>
+                                            <input type="checkbox" id="shop-search-delivery-input" class="hidden"/>
+                                        </span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-4 col-sm-2 col-xs-8 search-input">
+                                        <span id="loading">
+                                            <img src="/images/loading.gif">
+                                        </span>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 search-input">
+                                        <button id="shop-search-clear" class="btn btn-primary pull-right">Сбросить</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

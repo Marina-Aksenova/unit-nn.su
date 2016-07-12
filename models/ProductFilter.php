@@ -46,9 +46,11 @@ class ProductFilter extends Product
         ]);
 
         // load the search form data and validate
-        if (!($this->load($params) && $this->validate())) {
+        if (!$this->load($params)) {
             return $dataProvider;
         }
+
+        $this->formatPrice('price_dealer');
 
         // adjust the query by adding the filters
         $query->andFilterWhere(['like', 'title', $this->title]);

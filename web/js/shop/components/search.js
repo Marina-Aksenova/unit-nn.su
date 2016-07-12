@@ -10,12 +10,18 @@ define([
             self.priceTimer = null;
 
             self.container = $('.shop-search');
+            self.clearButtom = $('#shop-search-clear');
             self.title = $('#shop-search-title');
             self.price = $('#shop-search-price');
             self.stock = $('#shop-search-stock');
             self.stockInput = $('#shop-search-stock-input');
             self.delivery = $('#shop-search-delivery');
             self.deliveryInput = $('#shop-search-delivery-input');
+
+            self.clearButtom.click(function () {
+                self.clear();
+                self.search();
+            });
 
             self.title.keyup(function () {
                 clearTimeout(self.titleTimer);
