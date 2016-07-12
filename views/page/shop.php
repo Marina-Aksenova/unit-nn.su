@@ -3,6 +3,7 @@ use app\assets\AppAsset;
 use app\components\services\BaseService;
 use app\models\Product;
 use app\models\ProductGroup;
+use yii\bootstrap\ActiveForm;
 use yii\data\ActiveDataProvider;
 use yii\grid\Column;
 use yii\grid\GridView;
@@ -42,6 +43,7 @@ $this->registerJs("
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="shop-search">
+                                <div class="post-search">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 search-input">
                                         <div class="input-group">
@@ -51,10 +53,19 @@ $this->registerJs("
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 search-input">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 search-input">
                                         <div class="input-group">
-                                            <span class="input-group-addon" id="basic-addon1"><img src="/images/ruble.png" height="17"></span>
-                                            <input type="text" id="shop-search-price" class="form-control" placeholder="Цена">
+                                            <span class="input-group-addon"><img src="/images/ruble.png" height="14"></span>
+                                            <input type="text" id="shop-search-price-from" class="form-control" placeholder="Цена от">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default search-clear" type="button"><span class="glyphicon glyphicon-remove"></span></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 search-input">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><img src="/images/ruble.png" height="14"></span>
+                                            <input type="text" id="shop-search-price-to" class="form-control" placeholder="Цена до">
                                             <span class="input-group-btn">
                                                 <button class="btn btn-default search-clear" type="button"><span class="glyphicon glyphicon-remove"></span></button>
                                             </span>

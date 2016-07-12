@@ -30,6 +30,10 @@ requirejs([
         $('#loading').show();
     });
     $(document).on('pjax:complete', function() {
-        $('#loading').hide()
+        $('#products-grid-filters td')
+            .first()
+            .append($('<input type="text" name="ProductFilter[price_from]"/>'))
+            .append($('<input type="text" name="ProductFilter[price_to]"/>'));
+        $('#loading').hide();
     });
 });

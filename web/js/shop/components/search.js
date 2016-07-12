@@ -7,12 +7,14 @@ define([
             var self = this;
 
             self.titleTimer = null;
-            self.priceTimer = null;
+            self.priceFromTimer = null;
+            self.priceToTimer = null;
 
             self.container = $('.shop-search');
             self.clearButtom = $('#shop-search-clear');
             self.title = $('#shop-search-title');
-            self.price = $('#shop-search-price');
+            self.priceFrom = $('#shop-search-price-from');
+            self.priceTo = $('#shop-search-price-to');
             self.stock = $('#shop-search-stock');
             self.stockInput = $('#shop-search-stock-input');
             self.delivery = $('#shop-search-delivery');
@@ -30,9 +32,16 @@ define([
                 }, 500);
             });
 
-            self.price.keyup(function () {
-                clearTimeout(self.priceTimer);
-                self.priceTimer = setTimeout(function () {
+            self.priceFrom.keyup(function () {
+                clearTimeout(self.priceFromTimer);
+                self.priceFromTimer = setTimeout(function () {
+                    self.search();
+                }, 1000);
+            });
+
+            self.priceTo.keyup(function () {
+                clearTimeout(self.priceToTimer);
+                self.priceToTimer = setTimeout(function () {
                     self.search();
                 }, 1000);
             });
@@ -52,7 +61,8 @@ define([
         clear: function () {
             var self = this;
             self.title.val('');
-            self.price.val('');
+            self.priceFrom.val('');
+            self.priceTo.val('');
 
             // Отжатие кнопок фильтров
             if (self.stockInput.is(':checked')) {
@@ -68,7 +78,8 @@ define([
             var isDelivery = self.deliveryInput.is(':checked') ? 1 : '';
 
             $('[name="ProductFilter[title]"]').val(self.title.val());
-            $('[name="ProductFilter[price_dealer]"]').val(self.price.val());
+            $('[name="ProductFilter[price_from]"]').val(self.priceFrom.val());
+            $('[name="ProductFilter[price_to]"]').val(self.priceTo.val());
             $('[name="ProductFilter[stock]"]').val(isStock);
             $('[name="ProductFilter[delivery]"]').val(isDelivery);
             $("#products-grid").yiiGridView("applyFilter");

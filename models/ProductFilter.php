@@ -2,13 +2,15 @@
 
 namespace app\models;
 
-use app\components\BaseActiveRecord;
 use yii;
 use yii\data\ActiveDataProvider;
 
 class ProductFilter extends Product
 {
-   public function rules()
+    public $price_from;
+    public $price_to;
+
+    public function rules()
     {
         return [
             [['title'], 'string', 'max' => 155],
@@ -17,8 +19,11 @@ class ProductFilter extends Product
 
             [['catalog_number'], 'string', 'max' => 50],
 
-            [['price_dealer'], 'formatPrice'],
-            [['price_dealer'], 'double'],
+            [['price_from'], 'formatPrice'],
+            [['price_from'], 'double'],
+
+            [['price_to'], 'formatPrice'],
+            [['price_to'], 'double'],
 
             [['delivery'], 'integer', 'min' => 1],
 
@@ -54,12 +59,12 @@ class ProductFilter extends Product
 
         // adjust the query by adding the filters
         $query->andFilterWhere(['like', 'title', $this->title]);
-        $query->andFilterWhere(['price_dealer' => $this->price_dealer]);
         $query->andFilterWhere(['brand_id' => $this->brand_id]);
         $query->andFilterWhere(['group_id' => $this->group_id]);
         $query->andFilterWhere(['>=', 'delivery', $this->delivery]);
         $query->andFilterWhere(['>=', 'stock', $this->stock]);
-
+        $query->andFilterWhere(['>=', 'price_dealer', $this->price_from]);
+        $query->andFilterWhere(['<=', 'price_dealer', $this->price_to]);
         return $dataProvider;
     }
 }
