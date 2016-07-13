@@ -44,31 +44,32 @@ $this->registerJs("
                         <div class="panel-body">
                             <div class="shop-search">
                                 <div class="post-search">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 search-input">
-                                        <div class="input-group">
-                                            <input type="text" id="shop-search-title" class="form-control" placeholder="Название">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default search-clear" type="button"><span class="glyphicon glyphicon-remove"></span></button>
-                                            </span>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6 search-input">
+                                            <div class="input-group">
+                                                <input type="text" id="shop-search-title" class="form-control" placeholder="Название">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default search-clear" type="button"><span class="glyphicon glyphicon-remove"></span></button>
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 search-input">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><img src="/images/ruble.png" height="14"></span>
-                                            <input type="text" id="shop-search-price-from" class="form-control" placeholder="Цена от">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default search-clear" type="button"><span class="glyphicon glyphicon-remove"></span></button>
-                                            </span>
+                                        <div class="col-lg-3 col-md-3 col-sm-3 search-input">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><img src="/images/ruble.png" height="14"></span>
+                                                <input type="text" id="shop-search-price-from" class="form-control" placeholder="Цена от">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default search-clear" type="button"><span class="glyphicon glyphicon-remove"></span></button>
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 search-input">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><img src="/images/ruble.png" height="14"></span>
-                                            <input type="text" id="shop-search-price-to" class="form-control" placeholder="Цена до">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default search-clear" type="button"><span class="glyphicon glyphicon-remove"></span></button>
-                                            </span>
+                                        <div class="col-lg-3 col-md-3 col-sm-3 search-input">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><img src="/images/ruble.png" height="14"></span>
+                                                <input type="text" id="shop-search-price-to" class="form-control" placeholder="Цена до">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default search-clear" type="button"><span class="glyphicon glyphicon-remove"></span></button>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
