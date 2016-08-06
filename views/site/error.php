@@ -19,12 +19,14 @@ $traces = $exception->getTraceAsString() . '<br><br>Предыдущее иск�
 ?>
 <div class="site-error">
     <?php
+    if (!(($exception instanceof \yii\web\HttpException )&& ($exception->statusCode === 404))) {
         Yii::$app->mailer->compose()
             ->setFrom('support@unit-nn.ru')
             ->setTo(Yii::$app->params['adminEmail'])
             ->setSubject($error . ' | ' . $previousExceptionError)
             ->setHtmlBody(nl2br($traces))
             ->send();
+    }
     ?>
 
     <div class="alert alert-danger">
